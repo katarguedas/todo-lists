@@ -1,43 +1,22 @@
 import { IoTerminal } from "react-icons/io5";
 import Input from "./Input";
 import Todo from "./Todo";
+ 
+//--------------------------------------------------------
 
 
-const List = (props) => {
-
-    console.log("props:", { props });
-    
-    // tasks: [items
-    //     {
-    //     idi: uuidv4(),
-    //     text: "Steuererklärung",
-    //     done: false
-    //   },
-    //   {
-    //     idi: uuidv4(),
-    //     text: "Geschenk kaufen",
-    //     done: false
-    //   }
+const List = ({head, listId, items, todos, setTodos}) => {
 
     return (
         <div className="list">
-            <h2>{props.head}</h2>
-            <Input />
-            {/* { 
-                props.items.text.map(e => (
-                    <Todo task={e} />
-                ))
-            } */}
+            <h2>{head}</h2>
+            <hr></hr>
+            <Input listId={listId} todos={todos} setTodos={setTodos} />
             {
-                props.items.map(e => (
-                    <Todo task={e.text} key={e.idi}/>
+                items.map(e => (
+                    <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} />
                 ))
             }
-             {/* {
-                props.items.idi.forEach(e => (
-                    console.log(e)
-                ))
-             } */}
                 
         </div>
     );

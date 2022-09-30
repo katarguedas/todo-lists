@@ -1,3 +1,6 @@
+import React from 'react';
+import { useState } from 'react';
+
 import './App.css';
 import Headline from './components/Headline';
 import List from './components/List';
@@ -55,15 +58,21 @@ const listArray = [
   }
 ]
 
+//--------------------------------------------------------------------
 
 function App() {
+
+  const [todos, setTodos] = useState(listArray); 
+
   return (
     <div className="App">
+
       <Headline />
+
       <div className="listGroup">
         {
-          listArray.map(e => (
-          <List head={e.title} key={e.id} items={(e.tasks)} />
+          todos.map(e => (
+          <List head={e.title} key={e.id} listId={e.id} items={e.tasks} todos={todos} setTodos={setTodos} />
           ))
         }
       </div>
@@ -72,38 +81,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-// const listArray = [
-//   {
-//     id: uuidv4(),
-//     title: "Heute",
-//     tasks: {
-//       idi: [uuidv4(), uuidv4()],
-//       text: ["Einkaufen", "Kochen"],
-//       done: false
-//     }
-//   },
-//   {
-//     id: uuidv4(),
-//     title: "Morgen",
-//     tasks: {
-//       idi: [uuidv4(), uuidv4()],
-//       text: ["Fenster putzen", "Coden"],
-//       done: false
-//     }
-//   },
-//   {
-//     id: uuidv4(),
-//     title: "Demnächst",
-//     tasks: {
-//       idi: [uuidv4(), uuidv4()],
-//       text: ["Steuererklärung", "Geschenk kaufen"],
-//       done: false
-//     }
-//   }
-// ]
