@@ -5,7 +5,7 @@ import Todo from "./Todo";
 //--------------------------------------------------------
 
 
-const List = ({head, listId, items, todos, setTodos}) => {
+const List = ({head, listId, list, items, todos, setTodos}) => {
 
     return (
         <div className="list">
@@ -14,7 +14,7 @@ const List = ({head, listId, items, todos, setTodos}) => {
             <Input listId={listId} todos={todos} setTodos={setTodos} />
             {
                 items.map(e => (
-                    <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} />
+                    <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} list={list} />
                 ))
             }
                 

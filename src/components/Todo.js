@@ -1,12 +1,13 @@
 import { GoTrashcan } from "react-icons/go";
 import { GrCheckbox } from "react-icons/gr";
 import { GrCheckboxSelected } from "react-icons/gr";
-// import Arrows from "./Arrows.js";
+import { TiArrowRightOutline } from "react-icons/ti";
+import Arrow from "./Arrow.js";
 
 
 //---------------------------------------------------------------
 
-const Todo = ({ task, todos, setTodos, todoId }) => {
+const Todo = ({ task, todos, setTodos, todoId, list }) => {
 
     const deleteTodo = id => {
 
@@ -21,7 +22,7 @@ const Todo = ({ task, todos, setTodos, todoId }) => {
         }
         setTodos(t);
     }
-   //.................
+    //.................
     const toggleCheck = () => {
 
         const t = [...todos];
@@ -32,15 +33,14 @@ const Todo = ({ task, todos, setTodos, todoId }) => {
 
     //------------------
 
-   
     //...........
 
     return (
         <div className="todoGroup">
-            <GrCheckbox onClick={toggleCheck} style={ task.done === true ?  {display: "none"} : {} } className="checkBox"/>
-            <GrCheckboxSelected onClick={toggleCheck} style={ task.done === false ? {display: "none"} : {} } className="checkBox" />
-            <span className="todos" style={task.done === true ? {textDecoration: "line-through"} : {}} >{task.text}</span>
-            {/* <Arrows todos={todos} className="arrowRight" /> */}
+            <GrCheckbox onClick={toggleCheck} style={task.done === true ? { display: "none" } : {}} className="checkBox" />
+            <GrCheckboxSelected onClick={toggleCheck} style={task.done === false ? { display: "none" } : {}} className="checkBox" />
+            <span className="todos" style={task.done === true ? { textDecoration: "line-through" } : {}} >{task.text}</span>
+            <Arrow list={list} todos={todos} setTodos={setTodos} taskId={task.idi}/>
             {/* < TiArrowRightOutline className="arrowRight"/> */}
             < GoTrashcan onClick={deleteTodo} className="trash" />
         </div>

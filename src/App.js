@@ -57,12 +57,15 @@ const listArray = [
   ]
   }
 ]
+console.log(typeof listArray)
 
 //--------------------------------------------------------------------
 
 function App() {
 
   const [todos, setTodos] = useState(listArray); 
+
+  console.log(typeof todos)
 
   return (
     <div className="App">
@@ -72,7 +75,7 @@ function App() {
       <div className="listGroup">
         {
           todos.map(e => (
-          <List head={e.title} key={e.id} listId={e.id} items={e.tasks} todos={todos} setTodos={setTodos} />
+          <List head={e.title} key={e.id} listId={e.id} list={e} items={e.tasks} todos={todos} setTodos={setTodos} />
           ))
         }
       </div>
