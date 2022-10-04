@@ -9,7 +9,7 @@ import Arrow from "./Arrow.js";
 
 const Todo = ({ task, todos, setTodos, todoId, list }) => {
 
-    const deleteTodo = id => {
+    const deleteTodo = () => {
 
         const t = [...todos];
 
@@ -40,7 +40,7 @@ const Todo = ({ task, todos, setTodos, todoId, list }) => {
             <GrCheckbox onClick={toggleCheck} style={task.done === true ? { display: "none" } : {}} className="checkBox" />
             <GrCheckboxSelected onClick={toggleCheck} style={task.done === false ? { display: "none" } : {}} className="checkBox" />
             <span className="todos" style={task.done === true ? { textDecoration: "line-through" } : {}} >{task.text}</span>
-            <Arrow list={list} todos={todos} setTodos={setTodos} taskId={task.idi}/>
+            <Arrow list={list} todos={todos} setTodos={setTodos} task={task}/>
             {/* < TiArrowRightOutline className="arrowRight"/> */}
             < GoTrashcan onClick={deleteTodo} className="trash" />
         </div>

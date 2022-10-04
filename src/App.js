@@ -57,15 +57,12 @@ const listArray = [
   ]
   }
 ]
-console.log(typeof listArray)
 
 //--------------------------------------------------------------------
 
 function App() {
 
   const [todos, setTodos] = useState(listArray); 
-
-  console.log(typeof todos)
 
   return (
     <div className="App">

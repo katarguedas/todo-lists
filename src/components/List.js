@@ -16,8 +16,7 @@ const List = ({head, listId, list, items, todos, setTodos}) => {
                 items.map(e => (
                     <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} list={list} />
                 ))
-            }
-                
+            }          
         </div>
     );
 }
