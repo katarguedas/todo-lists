@@ -15,7 +15,7 @@ const Input = ({ listId, todos, setTodos }) => {
         })
 
         if ((todoNameRef !== "") && (todoNameRef.current.value.trim() !== "")) {
-
+      
             const t = [...todos];
             t[listIndex].tasks.push({
                 idi: uuidv4(),

@@ -40,7 +40,7 @@ const Arrow = ({ list, todos, setTodos, task }) => {
             moveAndDelete(array, index, 1)
             // } else if ((e.idi === task.idi) && (e.done === true)) {
         } else if (task.done === true) {
-            console.log("Erledigte Aufgaben werden nicht verschoben")
+            console.log("! Erledigte Aufgaben werden nicht verschoben")
         }
         // })
         return (null)
@@ -61,7 +61,7 @@ const Arrow = ({ list, todos, setTodos, task }) => {
             // console.log("Taskindex: ",index)
             moveAndDelete(array, index, -1)
         } else if (task.done === true) {
-            console.log("Erledigte Aufgaben werden nicht verschoben")
+            console.log("! Erledigte Aufgaben werden nicht verschoben")
         }
         // })
     }

@@ -7,10 +7,12 @@ import Todo from "./Todo";
 
 const List = ({head, listId, list, items, todos, setTodos}) => {
 
+    console.log("test")
     return (
         <div className="list">
             <h2>{head}</h2>
             <hr></hr>
+            
             <Input listId={listId} todos={todos} setTodos={setTodos} />
             {
                 items.map(e => (

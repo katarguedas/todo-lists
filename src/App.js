@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 
 import './App.css';
@@ -8,53 +8,24 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 // Variablen --------------
-const listArray = [
+
+const LOCAL_STORAGE_KEY = "local_storage_lists"
+
+const listArrayInit = [
   {
     id: uuidv4(),
     title: "Heute",
-    tasks: [
-      {
-      idi: uuidv4(),
-      text: "Einkaufen",
-      done: false
-    },
-    {
-      idi: uuidv4(),
-      text: "Kochen",
-      done: false
-    }]
-    },
+    tasks: []
+  },
   {
     id: uuidv4(),
     title: "Morgen",
-    tasks: [
-      {
-      idi: uuidv4(),
-      text: "Fenster putzen",
-      done: false
-      },
-      {
-        idi: uuidv4(),
-        text: "Coden",
-        done: false
-      }
-    ]
+    tasks: []
   },
   {
     id: uuidv4(),
     title: "Demnächst",
-    tasks: [
-      {
-      idi: uuidv4(),
-      text: "Steuererklärung",
-      done: false
-    },
-    {
-      idi: uuidv4(),
-      text: "Geschenk kaufen",
-      done: false
-    }
-  ]
+    tasks: []
   }
 ]
 
@@ -62,7 +33,29 @@ const listArray = [
 
 function App() {
 
-  const [todos, setTodos] = useState(listArray); 
+  const [todos, setTodos] = useState();
+
+  console.log("todos", todos);
+
+  const lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
+  console.log("lists:", lists)
+
+  useEffect(() => {
+    if (lists === null) {
+      setTodos(listArrayInit)
+      console.log("todos init", todos);
+    } else {
+      setTodos(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (todos) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
+    }
+  }, [todos])
+
+
 
   return (
     <div className="App">
@@ -71,9 +64,11 @@ function App() {
 
       <div className="listGroup">
         {
-          todos.map(e => (
-          <List head={e.title} key={e.id} listId={e.id} list={e} items={e.tasks} todos={todos} setTodos={setTodos} />
-          ))
+          todos ?
+            todos.map(e => (
+              <List head={e.title} key={e.id} listId={e.id} list={e} items={e.tasks} todos={todos} setTodos={setTodos} />
+            ))
+            : null
         }
       </div>
     </div>
