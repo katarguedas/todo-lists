@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 
-import './App.css';
 import Headline from './components/Headline';
-import List from './components/List';
 import { v4 as uuidv4 } from 'uuid';
 
+import Home from "./components/Home";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+
+import styled from 'styled-components';
 
 // Variablen --------------
 
@@ -34,45 +36,54 @@ const listArrayInit = [
 function App() {
 
   const [todos, setTodos] = useState();
+  
+  //..........................................................
+  const saveTodolistsToLocalStorage = (todos) => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
+  }
 
-  console.log("todos", todos);
-
-  const lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
-  console.log("lists:", lists)
-
-  useEffect(() => {
-    if (lists === null) {
-      setTodos(listArrayInit)
-      console.log("todos init", todos);
+  const loadTodoListsFromLocalStorage = () => {
+    if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) === null) {
+      return listArrayInit
     } else {
-      setTodos(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)))
+      return JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY))
     }
+  }
+
+  //.......................................................  
+  useEffect(() => {
+    const lists = loadTodoListsFromLocalStorage()
+      setTodos(lists)
   }, [])
 
   useEffect(() => {
     if (todos) {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
+      saveTodolistsToLocalStorage(todos)
     }
   }, [todos])
-
-
-
+//..............................................................
   return (
-    <div className="App">
+    <StyledApp>
 
       <Headline />
 
-      <div className="listGroup">
-        {
-          todos ?
-            todos.map(e => (
-              <List head={e.title} key={e.id} listId={e.id} list={e} items={e.tasks} todos={todos} setTodos={setTodos} />
-            ))
-            : null
-        }
-      </div>
-    </div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home todos={todos} setTodos={setTodos} />} />
+          <Route path="/test" element={<div>404 not found</div>} />
+          {/* <Route path="/list/:" element={<List />} /> */}
+        </Routes>
+      </BrowserRouter>
+
+    </StyledApp>
   );
 }
 
 export default App;
+
+// styled component --------------------------------------------
+
+const StyledApp = styled.div`
+background-color: rgb(247, 242, 234);
+text-align: center;
+`

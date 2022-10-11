@@ -1,4 +1,6 @@
 import { TiArrowRightOutline, TiArrowLeftOutline } from "react-icons/ti";
+import styled from "styled-components";
+import ReactTooltip from "react-tooltip";
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
@@ -25,11 +27,7 @@ const Arrow = ({ list, todos, setTodos, task }) => {
     //------   shiftRight()     -----------------------------------------
 
     const shiftRight = () => {
-        // console.log("Liste   ", list)
-        console.log(task)
 
-        // list.tasks.forEach(e => {
-        // if ((e.idi === task.idi) && (e.done === false)) {
         if (task.done === false) {
             const array = {
                 idi: task.idi,
@@ -38,19 +36,12 @@ const Arrow = ({ list, todos, setTodos, task }) => {
             }
             let index = list.tasks.findIndex(e => { return (e.idi === task.idi) })
             moveAndDelete(array, index, 1)
-            // } else if ((e.idi === task.idi) && (e.done === true)) {
-        } else if (task.done === true) {
-            console.log("! Erledigte Aufgaben werden nicht verschoben")
         }
-        // })
-        return (null)
     }
     //------   shiftLeft()     -----------------------------------------
 
     const shiftLeft = () => {
-        console.log(task)
 
-        // list.tasks.forEach(e => {
         if (task.done === false) {
             const array = {
                 idi: task.idi,
@@ -58,39 +49,73 @@ const Arrow = ({ list, todos, setTodos, task }) => {
                 done: task.done
             }
             let index = list.tasks.findIndex(e => { return (e.idi === task.idi) })
-            // console.log("Taskindex: ",index)
             moveAndDelete(array, index, -1)
-        } else if (task.done === true) {
-            console.log("! Erledigte Aufgaben werden nicht verschoben")
-        }
-        // })
+        } 
     }
 
     //------   Arrow end  --------------------------------------------
-
 
     //----- create Arrow-Buttons  ------------------------------------
 
     if (list.title === "Heute") {
         return (
-            <div className="arrowRight">
-                < TiArrowRightOutline onClick={shiftRight} />
+            <div>
+                <StyledArrowRight>
+                    < TiArrowRightOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftRight} />
+                </StyledArrowRight>
+                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
+                    Erledigte Aufgaben können nicht verschoben werden.
+                </ReactTooltip>
             </div>
         )
     } else if (list.title === "Morgen") {
         return (
             <div>
-                < TiArrowLeftOutline className="arrowLeft" onClick={shiftLeft}  />
-                < TiArrowRightOutline className="arrowRight" onClick={shiftRight} />
+                <StyledArrowLeft>
+                    < TiArrowLeftOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftLeft} />
+                </StyledArrowLeft>
+
+                <ReactTooltip type="light" event="click" eventOff="click" id="shiftInfo" place="top" effect="solid" border={true} >
+                    Erledigte Aufgaben können nicht verschoben werden.
+                </ReactTooltip>
+               
+                <StyledArrowRight>
+                    < TiArrowRightOutline data-tip data-event="click" data-event-off="dblclick" data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftRight} />
+                </StyledArrowRight>
+                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
+                    Erledigte Aufgaben können nicht verschoben werden.
+                </ReactTooltip>
             </div>
         )
     } else if (list.title === "Demnächst") {
-        return <div>
-            < TiArrowLeftOutline className="arrowLeft" onClick={shiftLeft} />
-        </div>
+        return (
+            <div>
+                <StyledArrowLeft>
+                    < TiArrowLeftOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftLeft} />
+                </StyledArrowLeft>
+                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
+                    Erledigte Aufgaben können nicht verschoben werden.
+                </ReactTooltip>
+            </div>
+
+        )
     }
 }
 
 //----------------------- END  ------------------------------------
 
 export default Arrow;
+
+// styled component --------------
+
+const StyledArrowRight = styled.div`
+  position: absolute;
+  right: 35px;
+  top: 12px;
+`
+
+const StyledArrowLeft = styled.div`
+  position: absolute;
+  right: 65px;
+  top: 12px;
+`
