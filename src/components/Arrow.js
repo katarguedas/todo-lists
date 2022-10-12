@@ -1,6 +1,7 @@
 import { TiArrowRightOutline, TiArrowLeftOutline } from "react-icons/ti";
 import styled from "styled-components";
-import ReactTooltip from "react-tooltip";
+
+
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
 
@@ -61,41 +62,33 @@ const Arrow = ({ list, todos, setTodos, task }) => {
         return (
             <div>
                 <StyledArrowRight>
-                    < TiArrowRightOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftRight} />
+                    < TiArrowRightOutline onClick={shiftRight} data-toggle="tooltip" data-placement="right" 
+                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
                 </StyledArrowRight>
-                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
-                    Erledigte Aufgaben können nicht verschoben werden.
-                </ReactTooltip>
             </div>
         )
     } else if (list.title === "Morgen") {
         return (
             <div>
                 <StyledArrowLeft>
-                    < TiArrowLeftOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftLeft} />
+                    < TiArrowLeftOutline onClick={shiftLeft} data-toggle="tooltip" data-placement="top" 
+                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
                 </StyledArrowLeft>
-
-                <ReactTooltip type="light" event="click" eventOff="click" id="shiftInfo" place="top" effect="solid" border={true} >
-                    Erledigte Aufgaben können nicht verschoben werden.
-                </ReactTooltip>
                
                 <StyledArrowRight>
-                    < TiArrowRightOutline data-tip data-event="click" data-event-off="dblclick" data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftRight} />
+                    < TiArrowRightOutline onClick={shiftRight} data-toggle="tooltip" data-placement="top" 
+                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
                 </StyledArrowRight>
-                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
-                    Erledigte Aufgaben können nicht verschoben werden.
-                </ReactTooltip>
+
             </div>
         )
     } else if (list.title === "Demnächst") {
         return (
             <div>
                 <StyledArrowLeft>
-                    < TiArrowLeftOutline data-tip data-for={task.done === true ? "shiftInfo" : {}} onClick={shiftLeft} />
+                    < TiArrowLeftOutline  onClick={shiftLeft} data-toggle="tooltip" data-placement="top" 
+                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
                 </StyledArrowLeft>
-                <ReactTooltip type="light" event="click" id="shiftInfo" place="top" effect="solid" border={true} eventOff="click" >
-                    Erledigte Aufgaben können nicht verschoben werden.
-                </ReactTooltip>
             </div>
 
         )

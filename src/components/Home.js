@@ -5,6 +5,7 @@ import styled from "styled-components"
 
 
 const Home = ({todos, setTodos }) => {
+    console.log()
     return (
 
         <StyledListGroup>
@@ -28,5 +29,5 @@ const StyledListGroup = styled.div`
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: center;
 `

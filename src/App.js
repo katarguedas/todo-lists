@@ -5,7 +5,8 @@ import Headline from './components/Headline';
 import { v4 as uuidv4 } from 'uuid';
 
 import Home from "./components/Home";
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import List from './components/List';
+import {BrowserRouter, Routes, Route, Link} from "react-router-dom";
 
 import styled from 'styled-components';
 
@@ -65,13 +66,16 @@ function App() {
   return (
     <StyledApp>
 
-      <Headline />
-
       <BrowserRouter>
+
+      <StyledLink to="/"><Headline /></StyledLink>
+        
+
         <Routes>
           <Route path="/" element={<Home todos={todos} setTodos={setTodos} />} />
           <Route path="/test" element={<div>404 not found</div>} />
-          {/* <Route path="/list/:" element={<List />} /> */}
+
+          <Route path="/list/:id" element={ todos ? <List todos={todos} setTodos={setTodos} /> : null } />
         </Routes>
       </BrowserRouter>
 
@@ -87,3 +91,9 @@ const StyledApp = styled.div`
 background-color: rgb(247, 242, 234);
 text-align: center;
 `
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: rgb(96, 116, 189);
+`
+
