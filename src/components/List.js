@@ -7,7 +7,6 @@ import { Link} from "react-router-dom";
 
 //--------------------------------------------------------
 
-
 const List = ({ list, todos, setTodos }) => {
 
   const { id } = useParams();
@@ -20,12 +19,11 @@ const List = ({ list, todos, setTodos }) => {
         <StyledListGroup>
         <StyledList>
           <StyledH2>{paramList.title}</StyledH2>
-          <hr></hr>
 
           <Input listId={paramList.id} todos={todos} setTodos={setTodos} />
           {
             paramList.tasks.map(e => (
-              <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} list={paramList} />
+              <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} list={paramList} />
             ))
           }
         </StyledList>
@@ -36,12 +34,11 @@ const List = ({ list, todos, setTodos }) => {
     return (
       <StyledList>
         <StyledLink to={`/list/${list.id}/`} ><StyledH2>{list.title}</StyledH2></StyledLink>
-        <hr></hr>
         
         <Input listId={list.id} todos={todos} setTodos={setTodos} />
         {
           list.tasks.map(e => (
-            <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} todoId={e.idi} list={list} />
+            <Todo task={e} key={e.idi} todos={todos} setTodos={setTodos} list={list} />
           ))
         }
       </StyledList>
@@ -57,19 +54,21 @@ const StyledH2 = styled.h2`
   font-family: 'Mali', 'sans-serif';
   color: rgb(96, 116, 189);
   font-size: 1.5rem;
+  padding-bottom: 10px;
   margin-bottom:1.0rem;
   text-decoration: none;
+  border-bottom: 1px solid rgb(96, 116, 189);;
 `
 
 const StyledList = styled.div`
-justify-content: center;
+  justify-content: center;
   padding: 1.0rem;
   min-width: 26rem;
   max-width: 30rem;
   border-radius: 0.75rem;
   box-shadow: 0 0 28px rgba(0, 0, 0, 0.4); 
-    -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
-    -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4); 
+    -webkit-box-shadow: 0 0 25px rgba(96, 116, 189, 0.4); 
+    -moz-box-shadow: 0 0 30px rgba(96, 116, 189, 0.4); 
   margin: 1.0rem;
 `
 
@@ -82,6 +81,6 @@ const StyledListGroup = styled.div`
   `
 
 const StyledLink = styled(Link)`
-text-decoration: none;
-color: rgb(96, 116, 189);
+  text-decoration: none;
+  color: rgb(96, 116, 189);
 `

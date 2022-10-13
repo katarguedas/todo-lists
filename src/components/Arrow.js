@@ -1,24 +1,19 @@
 import { TiArrowRightOutline, TiArrowLeftOutline } from "react-icons/ti";
-import styled from "styled-components";
-
+import styled, { keyframes } from "styled-components";
+import { useState } from 'react';
 
 //-----------------------------------------------------------------
 //-----------------------------------------------------------------
-
 
 const Arrow = ({ list, todos, setTodos, task }) => {
 
     //------   functions used in shiftLeft() und shiftRight() ----------
 
-    const getListIndex = () => {
-        for (let i = 0; i < todos.length; i++) {
-            if (list.id === todos[i].id)
-                return i
-        }
-    }
-    const listIndex = getListIndex()
+    const [showinfo, setShowinfo] = useState(0);
 
     const moveAndDelete = (array, index, direction) => {
+        console.log("innerhalb von move and delete",array, index, direction)
+        const listIndex = todos.findIndex(e => (e.id) === list.id)
         const t = [...todos]
         t[listIndex + direction].tasks.push(array)
         t[listIndex].tasks.splice(index, 1)
@@ -27,31 +22,22 @@ const Arrow = ({ list, todos, setTodos, task }) => {
 
     //------   shiftRight()     -----------------------------------------
 
-    const shiftRight = () => {
+    const show = () => setShowinfo(1)
+    const showhide = () => setShowinfo(0)
 
-        if (task.done === false) {
+    const shift = (direction) => {
+        if (task.done === true) {
+            show()
+        } else {
             const array = {
                 idi: task.idi,
                 text: task.text,
                 done: task.done
             }
             let index = list.tasks.findIndex(e => { return (e.idi === task.idi) })
-            moveAndDelete(array, index, 1)
+            console.log("direction:", direction)
+            moveAndDelete(array, index, direction)
         }
-    }
-    //------   shiftLeft()     -----------------------------------------
-
-    const shiftLeft = () => {
-
-        if (task.done === false) {
-            const array = {
-                idi: task.idi,
-                text: task.text,
-                done: task.done
-            }
-            let index = list.tasks.findIndex(e => { return (e.idi === task.idi) })
-            moveAndDelete(array, index, -1)
-        } 
     }
 
     //------   Arrow end  --------------------------------------------
@@ -62,8 +48,11 @@ const Arrow = ({ list, todos, setTodos, task }) => {
         return (
             <div>
                 <StyledArrowRight>
-                    < TiArrowRightOutline onClick={shiftRight} data-toggle="tooltip" data-placement="right" 
-                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
+                    < TiArrowRightOutline onClick={() => shift(1)} />
+                    {showinfo ?
+                        <StyledInfo done={task.done.toString()}  >Erledingte Aufgaben lassen sich nicht verschieben  </StyledInfo>
+                        : null}
+                    {showinfo ? setTimeout(showhide, 1500) : null}
                 </StyledArrowRight>
             </div>
         )
@@ -71,13 +60,19 @@ const Arrow = ({ list, todos, setTodos, task }) => {
         return (
             <div>
                 <StyledArrowLeft>
-                    < TiArrowLeftOutline onClick={shiftLeft} data-toggle="tooltip" data-placement="top" 
-                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
+                    < TiArrowLeftOutline onClick={() => shift(-1)} />
+                    {showinfo ?
+                        <StyledInfo done={task.done.toString()}  >Erledingte Aufgaben lassen sich nicht verschieben  </StyledInfo>
+                        : null}
+                    {showinfo ? setTimeout(showhide, 1500) : null}
                 </StyledArrowLeft>
-               
+
                 <StyledArrowRight>
-                    < TiArrowRightOutline onClick={shiftRight} data-toggle="tooltip" data-placement="top" 
-                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
+                    < TiArrowRightOutline onClick={() => shift(1)} />
+                    {showinfo ?
+                        <StyledInfo done={task.done.toString()}  >Erledingte Aufgaben lassen sich nicht verschieben  </StyledInfo>
+                        : null}
+                    {showinfo ? setTimeout(showhide, 1500) : null}
                 </StyledArrowRight>
 
             </div>
@@ -85,10 +80,13 @@ const Arrow = ({ list, todos, setTodos, task }) => {
     } else if (list.title === "Demnächst") {
         return (
             <div>
-                <StyledArrowLeft>
-                    < TiArrowLeftOutline  onClick={shiftLeft} data-toggle="tooltip" data-placement="top" 
-                    title="Erledingte Aufgaben lassen sich nicht verschieben"/>
-                </StyledArrowLeft>
+                <StyledArrowLeft2>
+                    < TiArrowLeftOutline onClick={() => shift(-1)} />
+                    {showinfo ?
+                        <StyledInfo done={task.done.toString()}  >Erledingte Aufgaben lassen sich nicht verschieben  </StyledInfo>
+                        : null}
+                    {showinfo ? setTimeout(showhide, 1500) : null}
+                </StyledArrowLeft2>
             </div>
 
         )
@@ -111,4 +109,14 @@ const StyledArrowLeft = styled.div`
   position: absolute;
   right: 65px;
   top: 12px;
+`
+const StyledArrowLeft2 = styled(StyledArrowLeft)`
+position: absolute;
+right: 35px;
+`
+const StyledInfo = styled.span`
+  display: ${props => props.done === "true" ? "inline" : "none"};
+  background-color: white;
+  color: red;
+  border: 1px solid red;
 `

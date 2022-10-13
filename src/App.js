@@ -70,7 +70,6 @@ function App() {
 
       <StyledLink to="/"><Headline /></StyledLink>
         
-
         <Routes>
           <Route path="/" element={<Home todos={todos} setTodos={setTodos} />} />
           <Route path="/test" element={<div>404 not found</div>} />

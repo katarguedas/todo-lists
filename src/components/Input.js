@@ -9,8 +9,8 @@ const Input = ({ listId, todos, setTodos }) => {
 
     const todoNameRef = useRef()
 
+    //............................
     const newTodoItem = () => {
-
         const listIndex = todos.findIndex(e => {return (e.id === listId)})
         console.log("listIndex",listIndex)
 
@@ -27,7 +27,7 @@ const Input = ({ listId, todos, setTodos }) => {
             todoNameRef.current.value = "";
         }
     }
-
+    //............................
     const handleAddClick = () => {
         newTodoItem();
     }
@@ -38,6 +38,7 @@ const Input = ({ listId, todos, setTodos }) => {
         }
     }
 
+    //------------------------------------------------------------------
     return (
         <StyledInputGroup>
             <StyledInput ref={todoNameRef} onKeyDown={newTodoKeyPress} name={listId} />
@@ -48,7 +49,7 @@ const Input = ({ listId, todos, setTodos }) => {
 
 export default Input;
 
-// styled component --------------
+// styled component ----------------------------------------------------
 
 const StyledInputGroup = styled.div`
   display: inline-flex;
@@ -58,12 +59,14 @@ const StyledInputGroup = styled.div`
 `
 const StyledAdd = styled(IoAddOutline)`
   padding: 0.1rem;
-  margin: 0.1rem 0.5rem;
-  font-size: 2.0rem;
+  margin: 0.1rem 0.5rem 0.1rem 1.5rem;
+  font-size: 1.75rem;
   color: rgb(134, 47, 216);
   background-color: rgb(178, 178, 209);
   border-radius: 0.15em;
 `
 const StyledInput = styled.input`
   font-size: 1.0rem;
+  width: 18rem;
+  height: 1.75rem;
 `

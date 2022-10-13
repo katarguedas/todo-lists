@@ -6,46 +6,39 @@ import styled from "styled-components";
 
 //---------------------------------------------------------------
 
-const Todo = ({ task, todos, setTodos, todoId, list }) => {
+const Todo = ({ task, todos, setTodos, list }) => {
 
-    const deleteTodo = () => {
+  const deleteTodo = (task) => {
 
-        const t = [...todos];
+    const taskIndex = list.tasks.findIndex(e => (e.idi) === task.idi)
 
-        for (let i = 0; i < t.length; i++) {
-            for (let n = 0; n < t[i].tasks.length; n++) {
-                if (t[i].tasks[n].idi === todoId) {
-                  console.log("task", t[i].tasks[n])
-                    t[i].tasks.splice(n, 1);
-                }
-            }
-        }
-        setTodos(t);
-    }
-    //.................
-    const toggleCheck = () => {
+    const t = [...todos];
+    list.tasks.splice(taskIndex, 1);
+    setTodos(t);
+  }
+  //.................
+  const toggleCheck = () => {
 
-        const t = [...todos];
-        task.done = !task.done;
-        setTodos(t);
-    }
+    const t = [...todos];
+    task.done = !task.done;
+    setTodos(t);
+  }
 
-    //------------------
-    //...........
+  //------------------
 
-    return (
-        <StyledTodoGroup>
-            <StyledCheckbox onClick={toggleCheck} done={task.done.toString()} />
-            <StyledCheckboxDone onClick={toggleCheck} done={task.done.toString()} />
+  return (
+    <StyledTodoGroup>
+      <StyledCheckbox onClick={toggleCheck} done={task.done.toString()} />
+      <StyledCheckboxDone onClick={toggleCheck} done={task.done.toString()} />
 
-            <StyledTodos done={task.done.toString()} >
-              {task.text}
-            </StyledTodos>
-            <Arrow list={list} todos={todos} setTodos={setTodos} task={task}/>
+      <StyledTodos done={task.done.toString()} >
+        {task.text}
+      </StyledTodos>
+      <Arrow list={list} todos={todos} setTodos={setTodos} task={task} />
 
-            < StyledTrash onClick={deleteTodo}  />
-        </StyledTodoGroup>
-    )
+      < StyledTrash onClick={() => deleteTodo(task)} />
+    </StyledTodoGroup>
+  )
 }
 //---------------------------------------------------------------
 
@@ -68,8 +61,8 @@ const StyledTodos = styled.div`
   padding: 5px;
   font-family: 'Montserrat', 'Helvetica Neue',
   sans-serif;
--webkit-font-smoothing: antialiased;
--moz-osx-font-smoothing: grayscale;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
   text-decoration: ${props => props.done === "true" ? "line-through" : "none"};
   &:hover {
     font-weight: 500;
