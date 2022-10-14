@@ -1,29 +1,21 @@
-import { IoAddOutline } from "react-icons/io5";
-import { v4 as uuidv4 } from 'uuid';
 import React, { useRef } from 'react'
+
+import { IoAddOutline } from "react-icons/io5";
+
 import styled from "styled-components";
 
 //-----------------------------------------------------
 
-const Input = ({ listId, todos, setTodos }) => {
+const Input = ({ listId, todos, addTodo }) => {
 
     const todoNameRef = useRef()
-
     //............................
     const newTodoItem = () => {
-        const listIndex = todos.findIndex(e => {return (e.id === listId)})
-        console.log("listIndex",listIndex)
+
+        const listIndex = todos.findIndex(e => { return (e.id === listId) })
 
         if ((todoNameRef !== "") && (todoNameRef.current.value.trim() !== "")) {
-      
-            const t = [...todos];
-            t[listIndex].tasks.push({
-                idi: uuidv4(),
-                text: todoNameRef.current.value,
-                done: false
-            })
-            setTodos(t);
-
+            addTodo(listIndex, todoNameRef.current.value)
             todoNameRef.current.value = "";
         }
     }
@@ -31,7 +23,7 @@ const Input = ({ listId, todos, setTodos }) => {
     const handleAddClick = () => {
         newTodoItem();
     }
-
+    //............................ F
     const newTodoKeyPress = event => {
         if (event.keyCode === 13) {
             newTodoItem();
@@ -49,7 +41,7 @@ const Input = ({ listId, todos, setTodos }) => {
 
 export default Input;
 
-// styled component ----------------------------------------------------
+//----------- styled component ----------------------------------------------------
 
 const StyledInputGroup = styled.div`
   display: inline-flex;

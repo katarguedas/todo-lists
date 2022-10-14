@@ -1,18 +1,24 @@
-
 import List from "./List"
 
 import styled from "styled-components"
+// --------------------------------------------------
 
-
-const Home = ({todos, setTodos }) => {
+const Home = ({ todos, setTodos, toggleTodo, addTodo, deleteTodo, moveAndDelete }) => {
     console.log()
     return (
-
         <StyledListGroup>
             {
                 todos ?
                     todos.map(e => (
-                        <List list={e} key={e.id} todos={todos} setTodos={setTodos} />
+                        <List
+                            list={e}
+                            key={e.id}
+                            todos={todos}
+                            setTodos={setTodos}
+                            toggleTodo={toggleTodo}
+                            addTodo={addTodo} 
+                            deleteTodo={deleteTodo}
+                            moveAndDelete={moveAndDelete} />
                     ))
                     : null
             }

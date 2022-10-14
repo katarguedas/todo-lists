@@ -1,14 +1,15 @@
 import styled from "styled-components";
+//-------------------------------------------------
 
 const Headline = () => {
-    return (
-            <StyledH1>Meine Todo Listen</StyledH1>
-    )
+  return (
+    <StyledH1>Meine Todo Listen</StyledH1>
+  )
 }
 
 export default Headline;
 
-// styled component --------------
+// -------------------styled component --------------
 
 const StyledH1 = styled.h1`
   display: inline-block;

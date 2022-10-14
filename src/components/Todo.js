@@ -1,42 +1,37 @@
 import { GoTrashcan } from "react-icons/go";
 import { GrCheckbox } from "react-icons/gr";
 import { GrCheckboxSelected } from "react-icons/gr";
+
 import Arrow from "./Arrow.js";
+
 import styled from "styled-components";
 
 //---------------------------------------------------------------
 
-const Todo = ({ task, todos, setTodos, list }) => {
+const Todo = ({ task, todos, list, toggleTodo, deleteTodo, moveAndDelete }) => {
 
-  const deleteTodo = (task) => {
-
+  const onDeleteTodoClick = (task) => {
     const taskIndex = list.tasks.findIndex(e => (e.idi) === task.idi)
-
-    const t = [...todos];
-    list.tasks.splice(taskIndex, 1);
-    setTodos(t);
+    deleteTodo(list, taskIndex)
   }
   //.................
-  const toggleCheck = () => {
-
-    const t = [...todos];
-    task.done = !task.done;
-    setTodos(t);
+  const onToggleTodoClick = () => {
+    toggleTodo(task);
   }
 
   //------------------
 
   return (
     <StyledTodoGroup>
-      <StyledCheckbox onClick={toggleCheck} done={task.done.toString()} />
-      <StyledCheckboxDone onClick={toggleCheck} done={task.done.toString()} />
+      <StyledCheckbox onClick={onToggleTodoClick} done={task.done.toString()} />
+      <StyledCheckboxDone onClick={onToggleTodoClick} done={task.done.toString()} />
 
       <StyledTodos done={task.done.toString()} >
         {task.text}
       </StyledTodos>
-      <Arrow list={list} todos={todos} setTodos={setTodos} task={task} />
+      <Arrow list={list} todos={todos} task={task} moveAndDelete={moveAndDelete} />
 
-      < StyledTrash onClick={() => deleteTodo(task)} />
+      < StyledTrash onClick={() => onDeleteTodoClick(task)} />
     </StyledTodoGroup>
   )
 }
@@ -44,7 +39,8 @@ const Todo = ({ task, todos, setTodos, list }) => {
 
 export default Todo;
 
-// styled component --------------
+
+// -------------------styled component --------------
 
 const StyledTodoGroup = styled.div`
   display: flex;
