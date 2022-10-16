@@ -6,13 +6,16 @@ import styled from "styled-components";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 
+import { useTodoAppContext } from "../providers/TodoAppContext"
+
 //--------------------------------------------------------
 
-const List = ({ list, todos, setTodos, toggleTodo, deleteTodo, addTodo, moveAndDelete }) => {
+const List = ({ list}) => {
+  const {todos, addTodo} = useTodoAppContext()
 
   const { id } = useParams();
 
-  if (id) {
+  if ((id) && (todos !==undefined)) {
     const paramList = todos.find(e => e.id === id)
     if (paramList) {
       return (
@@ -26,35 +29,25 @@ const List = ({ list, todos, setTodos, toggleTodo, deleteTodo, addTodo, moveAndD
                 <Todo
                   task={e}
                   key={e.idi}
-                  todos={todos}
-                  setTodos={setTodos}
-                  list={paramList}
-                  toggleTodo={toggleTodo}
-                  deleteTodo={deleteTodo}
-                  moveAndDelete={moveAndDelete} />
+                  list={paramList} />
               ))
             }
           </StyledList>
         </StyledListGroup>
       )
     } else { return <div>404 Liste nicht gefunden</div> }
-  } else {
+  } else if (todos !== undefined) {
     return (
       <StyledList>
         <StyledLink to={`/list/${list.id}/`} ><StyledH2>{list.title}</StyledH2></StyledLink>
 
-        <Input listId={list.id} todos={todos} setTodos={setTodos} addTodo={addTodo} />
+        <Input listId={list.id} todos={todos} addTodo={addTodo} />
         {
           list.tasks.map(e => (
             <Todo
               task={e}
               key={e.idi}
-              todos={todos}
-              setTodos={setTodos}
-              list={list}
-              toggleTodo={toggleTodo}
-              deleteTodo={deleteTodo}
-              moveAndDelete={moveAndDelete} />
+              list={list} />
           ))
         }
       </StyledList>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 import { v4 as uuidv4 } from 'uuid';
 
-//-----------------------------------------------------
+//---Variables ----------------------------------
 const LOCAL_STORAGE_KEY = "local_storage_lists"
 
 const listArrayInit = [
@@ -33,7 +33,7 @@ const useLists = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(todos))
   }
 
-  //....................................
+  //....................
   const loadTodoListsFromLocalStorage = () => {
     if (JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) === null) {
       return listArrayInit
@@ -42,20 +42,20 @@ const useLists = () => {
     }
   }
 
-  //.......................................................  
+  //-- useEffects ---------------------------------- 
   useEffect(() => {
     const lists = loadTodoListsFromLocalStorage()
     setTodos(lists)
   }, [])
 
-  //....................................
+  //....
   useEffect(() => {
     if (todos) {
       saveTodolistsToLocalStorage(todos)
     }
   }, [todos])
 
-  //....................................  
+  //--- functions  --------------------------------  
   const addTodo = (index, text) => {
     const t = [...todos];
     t[index].tasks.push({
@@ -66,20 +66,20 @@ const useLists = () => {
     setTodos(t);
   }
 
-  //....................................
+  //........................
   const toggleTodo = task => {
     const t = [...todos];
     task.done = !task.done;
     setTodos(t);
   }
 
-  //....................................
+  //......................
   const deleteTodo = (list, index) => {
     const t = [...todos];
     list.tasks.splice(index, 1);
     setTodos(t);
   }
-  //....................................
+  //..........................
   const moveAndDelete = (array, index, direction, listIndex) => {
   const t = [...todos]
         t[listIndex + direction].tasks.push(array)

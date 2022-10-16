@@ -46,7 +46,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
                     {showinfo ?
                         <StyledInfo
                             done={task.done.toString()}  >
-                            Erledingte Aufgaben lassen sich nicht verschieben
+                            Erledigte Aufgaben lassen sich nicht verschieben
                         </StyledInfo>
                         : null}
                     {showinfo ? setTimeout(showhide, 1500) : null}
@@ -61,7 +61,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
                     {showinfo ?
                         <StyledInfo
                             done={task.done.toString()}  >
-                            Erledingte Aufgaben lassen sich nicht verschieben
+                            Erledigte Aufgaben lassen sich nicht verschieben
                         </StyledInfo>
                         : null}
                     {showinfo ? setTimeout(showhide, 1500) : null}
@@ -72,7 +72,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
                     {showinfo ?
                         <StyledInfo
                             done={task.done.toString()}  >
-                            Erledingte Aufgaben lassen sich nicht verschieben
+                            Erledigte Aufgaben lassen sich nicht verschieben
                         </StyledInfo>
                         : null}
                     {showinfo ? setTimeout(showhide, 1500) : null}
@@ -87,7 +87,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
                     {showinfo ?
                         <StyledInfo
                             done={task.done.toString()}  >
-                            Erledingte Aufgaben lassen sich nicht verschieben
+                            Erledigte Aufgaben lassen sich nicht verschieben
                         </StyledInfo>
                         : null}
                     {showinfo ? setTimeout(showhide, 1500) : null}

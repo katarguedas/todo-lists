@@ -1,10 +1,12 @@
 import List from "./List"
 
 import styled from "styled-components"
+
+import { useTodoAppContext } from "../providers/TodoAppContext"
 // --------------------------------------------------
 
-const Home = ({ todos, setTodos, toggleTodo, addTodo, deleteTodo, moveAndDelete }) => {
-    console.log()
+const Home = () => {
+const {todos} = useTodoAppContext()
     return (
         <StyledListGroup>
             {
@@ -12,13 +14,7 @@ const Home = ({ todos, setTodos, toggleTodo, addTodo, deleteTodo, moveAndDelete 
                     todos.map(e => (
                         <List
                             list={e}
-                            key={e.id}
-                            todos={todos}
-                            setTodos={setTodos}
-                            toggleTodo={toggleTodo}
-                            addTodo={addTodo} 
-                            deleteTodo={deleteTodo}
-                            moveAndDelete={moveAndDelete} />
+                            key={e.id} />
                     ))
                     : null
             }

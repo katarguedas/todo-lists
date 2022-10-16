@@ -1,14 +1,21 @@
+// My Components
+import Arrow from "./Arrow.js";
+
+// My Hooks
+import { useTodoAppContext } from "../providers/TodoAppContext.js";
+
+//External Components
 import { GoTrashcan } from "react-icons/go";
 import { GrCheckbox } from "react-icons/gr";
 import { GrCheckboxSelected } from "react-icons/gr";
-
-import Arrow from "./Arrow.js";
 
 import styled from "styled-components";
 
 //---------------------------------------------------------------
 
-const Todo = ({ task, todos, list, toggleTodo, deleteTodo, moveAndDelete }) => {
+const Todo = ({task, list}) => {
+
+  const {todos, toggleTodo, deleteTodo, moveAndDelete} = useTodoAppContext();
 
   const onDeleteTodoClick = (task) => {
     const taskIndex = list.tasks.findIndex(e => (e.idi) === task.idi)
