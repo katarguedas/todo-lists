@@ -46,6 +46,7 @@ const useLists = () => {
   useEffect(() => {
     const lists = loadTodoListsFromLocalStorage()
     setTodos(lists)
+    console.log("test")
   }, [])
 
   //....

@@ -33,7 +33,7 @@ const Input = ({ listId, todos, addTodo }) => {
     //------------------------------------------------------------------
     return (
         <StyledInputGroup>
-            <StyledInput ref={todoNameRef} onKeyDown={newTodoKeyPress} name={listId} />
+            <StyledInput ref={todoNameRef} autoComplete="off" onKeyDown={newTodoKeyPress} name={listId} />
             <StyledAdd onClick={handleAddClick} />
         </StyledInputGroup>
     )

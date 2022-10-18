@@ -10,12 +10,13 @@ import { GrCheckbox } from "react-icons/gr";
 import { GrCheckboxSelected } from "react-icons/gr";
 
 import styled from "styled-components";
+import Tooltip from '@mui/material/Tooltip'
 
 //---------------------------------------------------------------
 
-const Todo = ({task, list}) => {
+const Todo = ({ task, list }) => {
 
-  const {todos, toggleTodo, deleteTodo, moveAndDelete} = useTodoAppContext();
+  const { todos, toggleTodo, deleteTodo, moveAndDelete } = useTodoAppContext();
 
   const onDeleteTodoClick = (task) => {
     const taskIndex = list.tasks.findIndex(e => (e.idi) === task.idi)

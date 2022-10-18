@@ -15,4 +15,7 @@ const StyledH1 = styled.h1`
   display: inline-block;
   font-family: 'Mali', sans-serif;
   font-size: 2.5rem;
+  &:hover {
+    color: rgb(147, 142, 234);
+  }
 `

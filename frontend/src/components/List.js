@@ -66,7 +66,10 @@ const StyledH2 = styled.h2`
   padding-bottom: 10px;
   margin-bottom:1.0rem;
   text-decoration: none;
-  border-bottom: 1px solid rgb(96, 116, 189);;
+  border-bottom: 1px solid rgb(96, 116, 189);
+  &:hover {
+    color: rgb(147, 142, 234);
+  }
 `
 
 const StyledList = styled.div`
@@ -79,6 +82,7 @@ const StyledList = styled.div`
     -webkit-box-shadow: 0 0 25px rgba(96, 116, 189, 0.4); 
     -moz-box-shadow: 0 0 30px rgba(96, 116, 189, 0.4); 
   margin: 1.0rem;
+  
 `
 
 const StyledListGroup = styled.div`
