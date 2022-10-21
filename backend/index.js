@@ -1,8 +1,9 @@
+const e = require('express');
 const express = require('express')
 const app = express()
 const port = 3001
 
-const listArrayInit = [
+const listArray = [
   {
     id: "bc5610f9-1a16-4cad-8fac-3033c3afbfdb",
     title: "Heute",
@@ -11,12 +12,12 @@ const listArrayInit = [
         idi: "ab243606-97ff-4a20-b000-06d413d996c1",
         text: "Apotheke",
         done: false
-      }, 
+      },
       {
         idi: "58c60a26-8e8a-48cb-9a68-83d583da9010",
         text: "Custom Hook wiederholen",
         done: true
-      }, 
+      },
       {
         idi: "eb292c32-5bf4-4165-a25e-6d115c0fd7dc",
         text: "einkaufen",
@@ -51,10 +52,73 @@ const listArrayInit = [
       }
     ]
   }
-] 
+]
+
+// CRUD - create, read, update, delete
+
+
+// read:
+// GET - Route, keine Parameter oder Queries notwendig
+// Name z. B.: "/todos"
+// liefert alle Todos an React App (Array)
+
+// create:
+// POST - Route,  keine Parameter oder Queries notwendig
+// Name z. B.: "/todo"
+// bekommt ein neues Todo aus React und fügt hier im Backend dem Array hinzu
+
+// update:
+// PUT - Route, Parameter/Queries erforderlich: id
+// Name z. B.: "/todo"
+// findet ein vorhandenes Todo und toggled den key
+
+//delete:
+// DELETE - Route, Parameter/Queries erforderlich: id
+// Name z. B.: "/todo"
+// findet ein vorhandenes Todo und löscht es aus dem Array
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('Hello World!')
+  res.send('Hello World! :-)')
+});
+
+app.get('/todos', (req, res) => {
+  res.status(200).send(listArray);
+})
+
+app.post('/newtodo', (req, res) => {
+  const todo = req.body;
+  const listnumber = req.query.listnr;
+  listArray[listnumber-1].tasks.push(todo);
+  res.status(200).send('Todo erfolgreich hinzugefügt')
+  console.log("todo", todo)
+})
+
+app.put('/toggletodo', (req, res) => {
+  const id = req.query.id;
+  const listnumber = parseInt(req.query.listnr);
+  // console.log(typeof id)
+  // console.log(listnumber)
+  // console.log(listArray[listnumber-1].tasks)
+  listArray[listnumber-1].tasks.map(e => {
+    if (e.idi === id) {
+      console.log(e.done)
+      e.done = !e.done;
+      console.log(e.done)
+      res.status(200).send('Todo erfolgreich geändert')
+    }
+  })
+  // res.status(200).send('Todo erfolgreich geändert')
+})
+
+app.delete('/deletetodo', (req ,res) => {
+  const listnumber = parseInt(req.query.listnr);
+  const id = req.query.id;
+  const index = listArray[listnumber-1].tasks.findIndex(e => (e.idi) === id);
+  console.log("TaskIndex",index, " Task:", listArray[listnumber-1].tasks[index].text, "gelöscht")
+  listArray[listnumber-1].tasks.splice(index, 1)
+  res.status(200).send('Todo erfolgreich gelöscht')
 })
 
 app.listen(port, () => {

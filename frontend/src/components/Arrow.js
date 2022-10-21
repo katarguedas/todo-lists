@@ -35,7 +35,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
     if (list.title === "Heute") {
         return (
             <div>
-                <Tooltip enterDelay="500" title=
+                <Tooltip enterDelay={500} title=
                     {task.done ? "Verschieben erledigter Todos nicht möglich" : ""} arrow>
                     <StyledArrowRight>
                         < TiArrowRightOutline onClick={() => shift(1)} />
@@ -46,14 +46,14 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
     } else if (list.title === "Morgen") {
         return (
             <div>
-                <Tooltip enterDelay="500" title=
+                <Tooltip enterDelay={500} title=
                     {task.done ? "Verschieben erledigter Todos nicht möglich" : ""} arrow>
                     <StyledArrowLeft>
                         < TiArrowLeftOutline onClick={() => shift(-1)} />
                     </StyledArrowLeft>
                 </Tooltip>
 
-                <Tooltip enterDelay="500" title=
+                <Tooltip enterDelay={500} title=
                     {task.done ? "Verschieben erledigter Todos nicht möglich" : ""} arrow>
                     <StyledArrowRight>
                         < TiArrowRightOutline onClick={() => shift(1)} />
@@ -64,7 +64,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
     } else if (list.title === "Demnächst") {
         return (
             <div>
-                <Tooltip enterDelay="500" title=
+                <Tooltip enterDelay={500} title=
                     {task.done ? "Verschieben erledigter Todos nicht möglich" : ""} arrow>
                     <StyledArrowLeft2>
                         < TiArrowLeftOutline onClick={() => shift(-1)} />

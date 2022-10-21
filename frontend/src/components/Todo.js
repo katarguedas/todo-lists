@@ -20,11 +20,13 @@ const Todo = ({ task, list }) => {
 
   const onDeleteTodoClick = (task) => {
     const taskIndex = list.tasks.findIndex(e => (e.idi) === task.idi)
-    deleteTodo(list, taskIndex)
+    const listIndex = todos.findIndex(e => { return (e.id === list.id) })
+    deleteTodo(list, taskIndex, listIndex)
   }
   //.................
   const onToggleTodoClick = () => {
-    toggleTodo(task);
+    const listIndex = todos.findIndex(e => { return (e.id === list.id) })
+    toggleTodo(task, listIndex);
   }
 
   //------------------
