@@ -79,6 +79,7 @@ const StyledTrash = styled(GoTrashcan)`
   right: 5px;
   top: 12px;
 `
+
 const StyledCheckbox = styled(GrCheckbox)`
   display: ${props => props.done === "true" ? "none" : "block"};
   position: absolute;

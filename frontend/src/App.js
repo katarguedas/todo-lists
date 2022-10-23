@@ -3,7 +3,7 @@
 import Headline from './components/Headline';
 import Home from "./components/Home";
 import List from './components/List';
-import { TodoAppContextProvider } from './providers/TodoAppContext';
+import { TodoAppContextProvider, useTodoAppContext } from './providers/TodoAppContext';
 
 // External Components
 import React from 'react';
