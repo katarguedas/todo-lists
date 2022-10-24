@@ -8,7 +8,7 @@ import styled from "styled-components"
 
 const Home = () => {
 
-  const { todos, posts, deletePost } = useTodoAppContext()
+  const { todos } = useTodoAppContext()
 
   return (
     <div>
@@ -23,6 +23,7 @@ const Home = () => {
             : null
         }
       </StyledListGroup>
+
     </div>
 
   )
@@ -38,7 +39,7 @@ const StyledListGroup = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-  margin-bottom: 80px;
+  margin-bottom: 40px;
 `
 
 

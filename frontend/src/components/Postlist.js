@@ -1,8 +1,8 @@
 import Post from "./Post"
 import InputPost from "./InputPost"
-import { StyledH2 } from "../styled/StyledH2"
 
 import { useTodoAppContext } from "../providers/TodoAppContext"
+
 //------------------------------------------------
 
 const Postlist = () => {
@@ -11,7 +11,6 @@ const Postlist = () => {
 
     return (
         <div>
-            <StyledH2>Pinnwand</StyledH2>
             <InputPost />
             {
                 posts ?
@@ -29,3 +28,6 @@ const Postlist = () => {
 }
 
 export default Postlist;
+
+
+//---------------------------------------------

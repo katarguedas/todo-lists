@@ -20,7 +20,6 @@ const usePosts = () => {
 
         const response = await axios(config);
 
-        console.log(response.data)
         return (response.data);
     }
 
@@ -45,7 +44,7 @@ const usePosts = () => {
 
         const response = await axios(config);
 
-        console.log(JSON.stringify(response.data));
+        // console.log(JSON.stringify(response.data));
         return (response.data);
     };
 
@@ -72,7 +71,6 @@ const usePosts = () => {
 
         const response = await axios(config);
 
-        console.log(response.data)
         return (response.data);
     }
 

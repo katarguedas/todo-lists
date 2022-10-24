@@ -4,7 +4,8 @@ import Headline from './components/Headline';
 import Home from "./components/Home";
 import List from './components/List';
 import Postlist from './components/Postlist';
-import { TodoAppContextProvider, useTodoAppContext } from './providers/TodoAppContext';
+import { TodoAppContextProvider } from './providers/TodoAppContext';
+import PostHeadline from './components/PostHeadline';
 
 // External Components
 import React from 'react';
@@ -24,22 +25,19 @@ function App() {
       <React.Fragment>
         <GlobalStyle />
         <StyledApp>
-
           <BrowserRouter>
             <StyledLink to="/"><Headline /></StyledLink>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/test" element={<div>404 not found</div>} />
               <Route path="/list/:id" element={<List /> }/>
-              <Route to="/posts" element={ <Postlist />} />
+              <Route to="/posts" element={<Postlist />} />
             </Routes>
-            <StyledLink to="/posts"><Postlist /></StyledLink>
+            <StyledLink to="/posts"><PostHeadline/></StyledLink>
+            <Postlist />
           </BrowserRouter>
-
         </StyledApp>
-
       </React.Fragment>
-
     </TodoAppContextProvider>
 
   );

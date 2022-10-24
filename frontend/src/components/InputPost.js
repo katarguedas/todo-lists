@@ -47,15 +47,11 @@ const InputPost = () => {
       {
         inputpost === true ?
           <div>
-            <div>
-              <StyledLabel htmlFor="title">Stichwort</StyledLabel>
-            </div>
+            <div><StyledLabel htmlFor="title">Stichwort</StyledLabel></div>
             <div>
               <StyledInputPost ref={postTitleRef} autoComplete="off" type="text" id="title" />
             </div>
-            <div>
-              <StyledLabel htmlFor="note">Notiz </StyledLabel>
-            </div>
+            <div> <StyledLabel htmlFor="note">Notiz </StyledLabel></div>
             <div>
               <StyledInputPostText ref={postTextRef} autoComplete="off" type="text" id="note" /></div>
             <Button
@@ -83,6 +79,7 @@ const StyledInputPostGroup = styled.div`
   margin-top: 15px;
   width: 20rem;;
   background-color: white;
+  /* border: 1px solid grey; */
 `
 const StyledNewPost = styled(IoAddOutline)`
   margin: 1.0rem;
