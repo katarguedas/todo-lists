@@ -3,6 +3,7 @@
 import Headline from './components/Headline';
 import Home from "./components/Home";
 import List from './components/List';
+import Postlist from './components/Postlist';
 import { TodoAppContextProvider, useTodoAppContext } from './providers/TodoAppContext';
 
 // External Components
@@ -30,7 +31,9 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/test" element={<div>404 not found</div>} />
               <Route path="/list/:id" element={<List /> }/>
+              <Route to="/posts" element={ <Postlist />} />
             </Routes>
+            <StyledLink to="/posts"><Postlist /></StyledLink>
           </BrowserRouter>
 
         </StyledApp>

@@ -1,4 +1,4 @@
-import { useTodoAppContext } from "./providers/TodoAppContext";
+import { useTodoAppContext } from "../providers/TodoAppContext";
 import styled from "styled-components";
 import { GoTrashcan } from "react-icons/go";
 
@@ -51,7 +51,7 @@ const StyledPostIt = styled.div`
   height:150px;
   padding:20px 10px;
   // background: #fefabc linear-gradient(150deg, #efec88 0%, #fefabc 100%);
-  background: #f1d5f3 linear-gradient(150deg, #eeb8f1 0%, #f4e7f5 100%);
+  background: #eed5f3 linear-gradient(150deg, #d298e9 0%, #e7d1eb 100%);
   border: 1px solid #cccccc;
   box-shadow: 0px 2px 4px rgba(0,0,0,0.3);
   transform: rotate(${props => props.number});
