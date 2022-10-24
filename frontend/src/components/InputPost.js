@@ -21,8 +21,6 @@ const InputPost = () => {
   }
 
   const newPostItem = () => {
-    console.log("title:", postTitleRef.current.value)
-    console.log("text:", postTextRef.current.value)
     if ((postTitleRef !== "") && (postTitleRef.current.value.trim() !== "")) {
       if ((postTextRef !== "") && (postTextRef.current.value.trim() !== ""))
         addPost(postTitleRef.current.value, postTextRef.current.value)
@@ -50,13 +48,13 @@ const InputPost = () => {
         inputpost === true ?
           <div>
             <div>
-              <StyledLabel for="title">Stichwort</StyledLabel>
+              <StyledLabel htmlFor="title">Stichwort</StyledLabel>
             </div>
             <div>
               <StyledInputPost ref={postTitleRef} autoComplete="off" type="text" id="title" />
             </div>
             <div>
-              <StyledLabel for="note">Notiz </StyledLabel>
+              <StyledLabel htmlFor="note">Notiz </StyledLabel>
             </div>
             <div>
               <StyledInputPostText ref={postTextRef} autoComplete="off" type="text" id="note" /></div>

@@ -54,6 +54,23 @@ const listArray = [
   }
 ]
 
+let postsList = [
+  {
+    id: "ac92fadf-d169-va64-bed8-d7a8534b2dfa",
+    title: "Küche",
+    text: "Toaster kaputt"
+  },
+  {
+    id: "af11fadf-d169-va64-bed8-d7a8534b2dfa",
+    title: "Terrasse",
+    text: "Pflanzen vor dem ersten Frost reinholen"
+  },
+  {
+    id: "af92fadf-d124-va64-bed8-d7a8534b2dfa",
+    title: "Dezember",
+    text: "Akten durchgehen"
+  }
+]
 // CRUD - create, read, update, delete
 
 
@@ -87,25 +104,29 @@ app.get('/todos', (req, res) => {
   res.status(200).send(listArray);
 })
 
+app.get('/posts', (req, res) => {
+  res.status(200).send(postsList);
+})
+
 app.post('/newtodo', (req, res) => {
   const todo = req.body;
   const listnumber = req.query.listnr;
   listArray[listnumber-1].tasks.push(todo);
   res.status(200).send('Todo erfolgreich hinzugefügt')
-  console.log("todo", todo)
+})
+
+app.post('/newpost', (req, res) => {
+  const post = req.body;
+  postsList.push(post);
+  res.status(200).send('Post erfolgreich hinzugefügt')
 })
 
 app.put('/toggletodo', (req, res) => {
   const id = req.query.id;
   const listnumber = parseInt(req.query.listnr);
-  // console.log(typeof id)
-  // console.log(listnumber)
-  // console.log(listArray[listnumber-1].tasks)
   listArray[listnumber-1].tasks.map(e => {
     if (e.idi === id) {
-      console.log(e.done)
       e.done = !e.done;
-      console.log(e.done)
       res.status(200).send('Todo erfolgreich geändert')
     }
   })
@@ -116,9 +137,15 @@ app.delete('/deletetodo', (req ,res) => {
   const listnumber = parseInt(req.query.listnr);
   const id = req.query.id;
   const index = listArray[listnumber-1].tasks.findIndex(e => (e.idi) === id);
-  console.log("TaskIndex",index, " Task:", listArray[listnumber-1].tasks[index].text, "gelöscht")
   listArray[listnumber-1].tasks.splice(index, 1)
   res.status(200).send('Todo erfolgreich gelöscht')
+})
+
+app.delete('/deletepost', (req ,res) => {
+  const id = req.query.id;
+  console.log("id:", id)
+  postsList = postsList.filter(e => e.id != id)
+  res.status(200).send('Post erfolgreich gelöscht')
 })
 
 app.listen(port, () => {
