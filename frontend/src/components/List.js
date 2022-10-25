@@ -40,6 +40,7 @@ const List = ({ list }) => {
     } else { return <div>404 Liste nicht gefunden</div> }
   } else if (todos !== undefined) {
     return (
+      <div>
       <StyledListGroup>
         <StyledList>
           <StyledLink to={`/list/${list.id}/`} ><StyledH2>{list.title}</StyledH2></StyledLink>
@@ -55,7 +56,7 @@ const List = ({ list }) => {
           }
         </StyledList>
       </StyledListGroup>
-      
+      </div>
     )
   }
 }
