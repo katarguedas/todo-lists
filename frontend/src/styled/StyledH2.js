@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const StyledH2 = styled.h2`
   font-family: 'Mali', 'sans-serif';
-  color: rgb(96, 116, 189);
   font-size: 1.5rem;
   width: 80%;
   padding-bottom: 10px;
@@ -10,8 +9,12 @@ export const StyledH2 = styled.h2`
   margin-left: auto;
   margin-right: auto;
   text-decoration: none;
-  border-bottom: 1px solid rgb(96, 116, 189);
+  border-bottom: 1px solid #ef476f;
+  color: #ef476f;
   &:hover {
-    color: rgb(147, 142, 234);
-  }
+    color: #118ab2;
+  };
+  &:active {
+    color: #eea111;
+  };
 `

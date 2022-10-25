@@ -59,7 +59,7 @@ const StyledTodoGroup = styled.div`
   align-items: baseline;
   top: 10px;
   padding: 5px;
-  border-bottom: 2px solid rgb(232, 222, 247);
+  border-bottom: 1px solid #118ab2;
 `
 const StyledTodos = styled.div`
   left: 45px;
@@ -69,9 +69,6 @@ const StyledTodos = styled.div`
    -webkit-font-smoothing: antialiased;
    -moz-osx-font-smoothing: grayscale;
   text-decoration: ${props => props.done === "true" ? "line-through" : "none"};
-  &:hover {
-    font-weight: 500;
-  }
 `
 const StyledTrash = styled(GoTrashcan)`
   position: absolute;
@@ -84,6 +81,7 @@ const StyledCheckbox = styled(GrCheckbox)`
   position: absolute;
   left: 5px;
   top: 12px;
+  background-color: #ffd166;
 `
 
 const StyledCheckboxDone = styled(GrCheckboxSelected)`
@@ -91,4 +89,5 @@ const StyledCheckboxDone = styled(GrCheckboxSelected)`
   position: absolute;
   left: 5px;
   top: 12px;
+  background-color: #fff;
   `

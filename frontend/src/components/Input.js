@@ -53,9 +53,12 @@ const StyledAdd = styled(IoAddOutline)`
   padding: 0.1rem;
   margin: 0.1rem 0.5rem 0.1rem 1.5rem;
   font-size: 1.75rem;
-  color: rgb(134, 47, 216);
-  background-color: rgb(178, 178, 209);
+  color: #fff;
+  background-color: #06d6a0;
   border-radius: 0.15em;
+  :active {
+    transform: translateY(2px);
+  }
 `
 const StyledInput = styled.input`
   font-size: 1.0rem;

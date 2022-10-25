@@ -16,6 +16,9 @@ const StyledH1 = styled.h1`
   font-family: 'Mali', sans-serif;
   font-size: 2.5rem;
   &:hover {
-    color: rgb(147, 142, 234);
-  }
+    color: #118ab2;
+  };
+  &:active {
+    color: #eea111;
+  };
 `

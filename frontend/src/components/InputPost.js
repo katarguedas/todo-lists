@@ -78,15 +78,15 @@ const StyledInputPostGroup = styled.div`
   margin-bottom: 6px;
   margin-top: 15px;
   width: 20rem;;
-  background-color: white;
-  /* border: 1px solid grey; */
+  background-color: #ffd166;
+
 `
 const StyledNewPost = styled(IoAddOutline)`
   margin: 1.0rem;
   padding: 0.1rem;
   font-size: 2.5rem;
-  color: rgb(134, 47, 216);
-  background-color: rgb(178, 178, 209);
+  color: #fff;
+  background-color: #06d6a0;
   border-radius: 0.75em;
   :active {
     transform: translateY(2px);
@@ -105,7 +105,7 @@ const StyledInputPostText = styled.textarea`
   height: 4.5rem;
 `
 const StyledLabel = styled.label`
-
+  font-weight: 500;
   width: 25px;
 `
 
