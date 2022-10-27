@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "635970b2f7521ddb4069a26e"
+  },
+  "id": "list3",
+  "title": "Demnächst",
+  "tasks": [
+    {
+      "idi": "543454v3453",
+      "text": "Kurs",
+      "done": false
+    },
+    {
+      "idi": "8613063e-d0a2-42c8-9cb5-539a94780b9b",
+      "text": "code testen",
+      "done": true
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "635a2d9308efb6b5c98636c4"
+  },
+  "id": "list001",
+  "title": "Heute",
+  "tasks": [
+    {
+      "idi": "45345987-323626-23576262",
+      "text": "mongoose lernen",
+      "done": false
+    },
+    {
+      "idi": "4522287-323626-238998021",
+      "text": "coden",
+      "done": false
+    },
+    {
+      "idi": "15345987-323626-2356111",
+      "text": "einkaufen",
+      "done": false
+    }
+  ]
+},{
+  "_id": {
+    "$oid": "635adf6afd0df069904693b4"
+  },
+  "id": "list2",
+  "title": "Morgen",
+  "tasks": [
+    {
+      "idi": "8613063e-d0a2-42c8-0000-539a94780b9b",
+      "text": "Termin vereinbaren",
+      "done": false
+    },
+    {
+      "idi": "12121212-d0a2-42c8-0000-539a94780b9b",
+      "text": "Kündigung schreiben",
+      "done": false
+    }
+  ]
+}]

@@ -55,7 +55,7 @@ const useLists = () => {
  // füge ein Todo insBackend ein:---------------------
   const addTodoToBackend = async (todo, index) => {
 
-    index = index +1;
+    console.log("index:", index)
     var config = {
       method: 'post',
       url: '/newtodo?listnr='+index,
@@ -77,8 +77,9 @@ const useLists = () => {
       done: false
     }
     t[index].tasks.push(todo)
+    const listId = todos[index].id;
     setTodos(t);
-    addTodoToBackend(todo, index)
+    addTodoToBackend(todo, listId)
   }
   // ------------------------------------------------
 
@@ -113,7 +114,6 @@ const useLists = () => {
       url: '/deletetodo?id='+id+'&listnr='+index,
       headers: { }
     };
-    
     const response = await axios(config);
 
     return (response.data);
