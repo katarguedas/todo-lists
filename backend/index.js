@@ -1,5 +1,6 @@
 const e = require('express');
 const express = require('express')
+const mongoose = require('mongoose');
 const app = express()
 const port = 3001
 
@@ -73,7 +74,6 @@ let postsList = [
 ]
 // CRUD - create, read, update, delete
 
-
 // read:
 // GET - Route, keine Parameter oder Queries notwendig
 // Name z. B.: "/todos"
@@ -94,57 +94,115 @@ let postsList = [
 // Name z. B.: "/todo"
 // findet ein vorhandenes Todo und löscht es aus dem Array
 
+
 app.use(express.json());
+
+app.use(async function (req, res, next) {
+  await mongoose.connect('mongodb://localhost:27017/todolists');
+  // await mongoose.connect('mongodb+srv://admin:<passwort>@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
+  next();
+})
+
+const todoSchema = new mongoose.Schema({
+  id: String,
+  title: String,
+  tasks: {
+    idi: String,
+    text: String,
+    done: Boolean
+  }
+});
+
+const postSchema = new mongoose.Schema({
+  id: String,
+  title: String,
+  text: String
+
+})
+
+const Todo = mongoose.model('todos', todoSchema);
+const Post = mongoose.model('posts', postSchema);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World! :-)')
 });
 
-app.get('/todos', (req, res) => {
-  res.status(200).send(listArray);
+app.get('/todos', async (req, res) => {
+  const response = await Todo.find()
+  res.status(200).send(response);
 })
 
-app.get('/posts', (req, res) => {
-  res.status(200).send(postsList);
+app.get('/posts', async (req, res) => {
+  const response = await Post.find()
+  res.status(200).send(response);
 })
 
-app.post('/newtodo', (req, res) => {
-  const todo = req.body;
-  const listnumber = req.query.listnr;
-  listArray[listnumber-1].tasks.push(todo);
-  res.status(200).send('Todo erfolgreich hinzugefügt')
-})
+// --- ADD TODO -------------<< hier habe ich Probleme
+app.post('/newtodo', async(req, res) => {
+  const listId = req.query.listnr;
+  console.log("listnr: ",listId, "\n")
+  const todo = req.body
+  console.log("todo: ", todo, "\n")
 
-app.post('/newpost', (req, res) => {
+  let response = await Todo.findOne( {id: listId})
+  console.log("response nach findOne:",response, "\n")
+
+  response = await Todo.updateOne({ id: listId}, { $push: {tasks: todo}} )  
+  console.log("\nresponse nach updateOne:",response, "\n")
+  }
+)
+
+app.post('/newpost', async(req, res) => {
   const post = req.body;
-  postsList.push(post);
+  console.log(post)
+  const response = await Post.create(post)
+  
   res.status(200).send('Post erfolgreich hinzugefügt')
 })
 
-app.put('/toggletodo', (req, res) => {
+app.put('/toggletodo', async(req, res) => {   // gehe ich später an
   const id = req.query.id;
-  const listnumber = parseInt(req.query.listnr);
-  listArray[listnumber-1].tasks.map(e => {
-    if (e.idi === id) {
-      e.done = !e.done;
-      res.status(200).send('Todo erfolgreich geändert')
-    }
+  const listId = req.query.listnr;
+  const todo = await Todo.findOne( { task: {idi: id }});
+  console.log("todo:", todo)
+  todo.done = !todo.done;
+  const response = await Todo.updateOne({ id: req.query.id }, todo )
+
+  res.status(200).send('Todo erfolgreich geändert')
   })
-  // res.status(200).send('Todo erfolgreich geändert')
-})
 
-app.delete('/deletetodo', (req ,res) => {
-  const listnumber = parseInt(req.query.listnr);
+
+// DELETE TODO ----------<< hier habe ich Probleme
+app.delete('/deletetodo', async (req, res) => {
+  const listId = req.query.listnr;
   const id = req.query.id;
-  const index = listArray[listnumber-1].tasks.findIndex(e => (e.idi) === id);
-  listArray[listnumber-1].tasks.splice(index, 1)
-  res.status(200).send('Todo erfolgreich gelöscht')
+
+  console.log("listid:",listId)
+  console.log("id:",id)
+
+  const response = await Todo.findOneAndUpdate( 
+    {id: listId, idi: id},
+    {$pull: {"tasks.$.idi": id} }
+    )
+console.log(response)
+
+  // response = Todo.updateOne( {},
+  //   { $pull: { "tasks": {idi: id} }
+  //   }
+  // )
+  // response.tasks.updateOne( { $pull: {tasks: {id: id }}} )
+  //  response = await Todo.deleteOne( {id: listId}, { "tasks.idi": id } ) 
+
+  res.status(200).send('Todo erfolgreich gelöscht?')
 })
 
-app.delete('/deletepost', (req ,res) => {
+
+app.delete('/deletepost', async(req, res) => {
   const id = req.query.id;
   console.log("id:", id)
-  postsList = postsList.filter(e => e.id != id)
+  const response =await Post.deleteOne({id: id})
+  console.log(response);
   res.status(200).send('Post erfolgreich gelöscht')
 })
 
