@@ -35,7 +35,8 @@ const useLists = () => {
 
     var config = {
       method: 'get',
-      url: '/todos',
+      // url: '/todos',
+      url: '/todolists',
       headers: {}
     };
 
@@ -55,10 +56,9 @@ const useLists = () => {
  // füge ein Todo insBackend ein:---------------------
   const addTodoToBackend = async (todo, index) => {
 
-    console.log("index:", index)
     var config = {
       method: 'post',
-      url: '/newtodo?listnr='+index,
+      url: '/todo?listnr='+index,
       headers: {
         'Content-Type': 'application/json'
       },
