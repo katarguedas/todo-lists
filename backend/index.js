@@ -103,7 +103,7 @@ app.use(async function (req, res, next) {
   next();
 })
 
-const todoSchema = new mongoose.Schema({
+/* const todoSchema = new mongoose.Schema({
   id: String,
   title: String,
   tasks: {
@@ -111,7 +111,7 @@ const todoSchema = new mongoose.Schema({
     text: String,
     done: Boolean
   }
-});
+}); */
 
 const postSchema = new mongoose.Schema({
   id: String,
@@ -120,13 +120,50 @@ const postSchema = new mongoose.Schema({
 
 })
 
+// SEBASTIAN
+const todoSchema = new mongoose.Schema({
+  id: String,
+  text: String,
+  done: Boolean
+})
+
+const todoListSchema = new mongoose.Schema({
+  id: String,
+  title: String,
+  todos: [
+    todoSchema
+  ]
+});
+const TodoList = mongoose.model('todolists', todoListSchema);
+//SEBASTIAN
+
 const Todo = mongoose.model('todos', todoSchema);
 const Post = mongoose.model('posts', postSchema);
-
 
 app.get('/', (req, res) => {
   res.send('Hello World! :-)')
 });
+
+// SEBASTIAN
+app.post('/list', async (req, res) => {
+  const todoList = {
+    id: req.body.id,
+    title: req.body.title,
+    todos: []
+  };
+  console.log(req.body)
+  const response = await TodoList.create(todoList);
+  res.status(200).send("Liste erzeugt");
+})
+app.post('/todo', async (req, res) => {
+  const listId = req.query.listId;
+  const todo = req.body;
+  const response1 = await TodoList.findOne({ id: listId })
+  console.log(response1);
+  const response2 = await TodoList.updateOne({ id: listId }, { $push: { todos: todo } })
+  res.status(200).send("Todo hinzugefügt");
+})
+// SEBASTIAN
 
 app.get('/todos', async (req, res) => {
   const response = await Todo.find()
