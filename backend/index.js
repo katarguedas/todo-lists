@@ -1,125 +1,64 @@
 const e = require('express');
-const express = require('express')
+const express = require('express');
+const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
+const { response } = require('express');
+const pwdat = require('./pwdat');
 const app = express()
 const port = 3001
+//--------------------------------------------------------
 
-const listArray = [
+const list = [
   {
-    id: "bc5610f9-1a16-4cad-8fac-3033c3afbfdb",
+    id: uuidv4(),
     title: "Heute",
-    tasks: [
-      {
-        idi: "ab243606-97ff-4a20-b000-06d413d996c1",
-        text: "Apotheke",
-        done: false
-      },
-      {
-        idi: "58c60a26-8e8a-48cb-9a68-83d583da9010",
-        text: "Custom Hook wiederholen",
-        done: true
-      },
-      {
-        idi: "eb292c32-5bf4-4165-a25e-6d115c0fd7dc",
-        text: "einkaufen",
-        done: false
-      }
-    ]
+    tasks: []
   },
   {
-    id: "bc22bcf9-f3ed-4d75-adb3-478d6eb54cee",
+    id: uuidv4(),
     title: "Morgen",
-    tasks: [
-      {
-        idi: "bf136068-fe71-473b-9d05-ecafca2fc363",
-        text: "Kurs",
-        done: false
-      },
-      {
-        idi: "8649063e-d0a2-40c8-9fb5-533f94740c9b",
-        text: "coden",
-        done: false
-      }
-    ]
+    tasks: []
   },
   {
-    id: "e94f8b28-e9cf-4a35-b93a-d78d75261555",
+    id: uuidv4(),
     title: "Demnächst",
-    tasks: [
-      {
-        idi: "af92fadf-d169-4564-bcc8-d7a8534b2dfa",
-        text: "Fenster putzen",
-        done: false
-      }
-    ]
+    tasks: []
   }
 ]
-
-let postsList = [
-  {
-    id: "ac92fadf-d169-va64-bed8-d7a8534b2dfa",
-    title: "Küche",
-    text: "Toaster kaputt"
-  },
-  {
-    id: "af11fadf-d169-va64-bed8-d7a8534b2dfa",
-    title: "Terrasse",
-    text: "Pflanzen vor dem ersten Frost reinholen"
-  },
-  {
-    id: "af92fadf-d124-va64-bed8-d7a8534b2dfa",
-    title: "Dezember",
-    text: "Akten durchgehen"
-  }
-]
-// CRUD - create, read, update, delete
-
-// read:
-// GET - Route, keine Parameter oder Queries notwendig
-// Name z. B.: "/todos"
-// liefert alle Todos an React App (Array)
-
-// create:
-// POST - Route,  keine Parameter oder Queries notwendig
-// Name z. B.: "/todo"
-// bekommt ein neues Todo aus React und fügt hier im Backend dem Array hinzu
-
-// update:
-// PUT - Route, Parameter/Queries erforderlich: id
-// Name z. B.: "/todo"
-// findet ein vorhandenes Todo und toggled den key
-
-//delete:
-// DELETE - Route, Parameter/Queries erforderlich: id
-// Name z. B.: "/todo"
-// findet ein vorhandenes Todo und löscht es aus dem Array
 
 
 app.use(express.json());
 
 app.use(async function (req, res, next) {
-  await mongoose.connect('mongodb://localhost:27017/todolists');
-  // await mongoose.connect('mongodb+srv://admin:<passwort>@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
+  const password = pwdat()
+  // LOCAL:
+  // await mongoose.connect('mongodb://localhost:27017/todolists');
+  //CLOUD REMOTE:
+  await mongoose.connect('mongodb+srv://admin:'+password+'@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
   next();
 })
 
 const todoSchema = new mongoose.Schema({
+  idi: String,
+  text: String,
+  done: Boolean
+});
+
+const todoListSchema = new mongoose.Schema({
   id: String,
   title: String,
-  tasks: {
-    idi: String,
-    text: String,
-    done: Boolean
-  }
+  tasks: [
+    todoSchema
+  ]
 });
 
 const postSchema = new mongoose.Schema({
   id: String,
   title: String,
   text: String
+});
 
-})
-
+const TodoList = mongoose.model('todoList', todoListSchema);
 const Todo = mongoose.model('todos', todoSchema);
 const Post = mongoose.model('posts', postSchema);
 
@@ -128,9 +67,9 @@ app.get('/', (req, res) => {
   res.send('Hello World! :-)')
 });
 
-app.get('/todos', async (req, res) => {
-  const response = await Todo.find()
-  res.status(200).send(response);
+app.get('/todolists', async (req, res, next) => {
+  const response = await TodoList.find();
+  res.status(200).send(response)
 })
 
 app.get('/posts', async (req, res) => {
@@ -138,71 +77,46 @@ app.get('/posts', async (req, res) => {
   res.status(200).send(response);
 })
 
-// --- ADD TODO -------------<< hier habe ich Probleme
-app.post('/newtodo', async(req, res) => {
+// TODO HINZUFÜGEN ---------------------
+app.post('/todo', async (req, res) => {
   const listId = req.query.listnr;
-  console.log("listnr: ",listId, "\n")
-  const todo = req.body
-  console.log("todo: ", todo, "\n")
+  const todo = req.body;
+  const response = await TodoList.updateOne({ id: listId }, { $push: { tasks: todo } })
+  res.status(200).send("Todo hinzugefügt");
+})
 
-  let response = await Todo.findOne( {id: listId})
-  console.log("response nach findOne:",response, "\n")
-
-  response = await Todo.updateOne({ id: listId}, { $push: {tasks: todo}} )  
-  console.log("\nresponse nach updateOne:",response, "\n")
-  }
-)
-
+// PostIt hinzufügen -------------------
 app.post('/newpost', async(req, res) => {
   const post = req.body;
-  console.log(post)
   const response = await Post.create(post)
-  
   res.status(200).send('Post erfolgreich hinzugefügt')
 })
 
-app.put('/toggletodo', async(req, res) => {   // gehe ich später an
-  const id = req.query.id;
-  const listId = req.query.listnr;
-  const todo = await Todo.findOne( { task: {idi: id }});
-  console.log("todo:", todo)
-  todo.done = !todo.done;
-  const response = await Todo.updateOne({ id: req.query.id }, todo )
-
-  res.status(200).send('Todo erfolgreich geändert')
+// 'TODO ÄNDERN ---------------------------
+app.put('/toggletodo', async (req, res) => {
+  const listId = "list" + req.query.listnr;
+  const todoId = req.query.id;
+  const response = await TodoList.findOne({ id: listId });
+  response.tasks.map(e => {
+    e.idi === todoId ? e.done = !e.done : null
   })
+  response.save();
+  res.status(200).send('Todo erfolgreich geändert')
+})
 
-
-// DELETE TODO ----------<< hier habe ich Probleme
+// DELETE TODO ----
 app.delete('/deletetodo', async (req, res) => {
-  const listId = req.query.listnr;
-  const id = req.query.id;
-
-  console.log("listid:",listId)
-  console.log("id:",id)
-
-  const response = await Todo.findOneAndUpdate( 
-    {id: listId, idi: id},
-    {$pull: {"tasks.$.idi": id} }
-    )
-console.log(response)
-
-  // response = Todo.updateOne( {},
-  //   { $pull: { "tasks": {idi: id} }
-  //   }
-  // )
-  // response.tasks.updateOne( { $pull: {tasks: {id: id }}} )
-  //  response = await Todo.deleteOne( {id: listId}, { "tasks.idi": id } ) 
-
+  const listId = "list" + req.query.listnr;;
+  const todoId = req.query.id;
+  const response = await TodoList.findOne({ id: listId })
+  response.tasks = response.tasks.filter(e => e.idi != todoId)
+  response.save();
   res.status(200).send('Todo erfolgreich gelöscht?')
 })
 
-
-app.delete('/deletepost', async(req, res) => {
+app.delete('/deletepost', async (req, res) => {
   const id = req.query.id;
-  console.log("id:", id)
-  const response =await Post.deleteOne({id: id})
-  console.log(response);
+  const response = await Post.deleteOne({ id: id })
   res.status(200).send('Post erfolgreich gelöscht')
 })
 
