@@ -46,14 +46,14 @@ const List = ({ list }) => {
           <StyledLink to={`/list/${list.id}/`} ><StyledH2>{list.title}</StyledH2></StyledLink>
 
           <Input listId={list.id} todos={todos} addTodo={addTodo} />
-          {
+          {/* {
             list.tasks.map(e => (
-              <Todo
-                task={e}
-                key={e.idi}
-                list={list} />
+              <Todo task={e} key={e.idi} list={list} />
             ))
-          }
+          } */}
+          <Todo task={list.tasks[0]} key={list.tasks[0].idi} list={list} />
+          <Todo task={list.tasks[1]} key={list.tasks[1].idi} list={list} />
+  
         </StyledList>
       </StyledListGroup>
       </div>
