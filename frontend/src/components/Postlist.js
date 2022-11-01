@@ -13,16 +13,8 @@ const Postlist = () => {
         return (
             <div>
                 <InputPost />
-                {
-                    posts ?
-                        posts.map(e => (
-                            <Post
-                                post={e}
-                                key={e.id}
-                                deletePost={deletePost} />
-                        ))
-                        : null
-                }
+                <Post post={posts[0]} key={posts[0].id} deletePost={deletePost} />
+                <Post post={posts[1]} key={posts[1].id} deletePost={deletePost} />
 
             </div>
         )
