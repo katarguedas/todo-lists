@@ -9,22 +9,24 @@ const Postlist = () => {
 
     const { posts, deletePost } = useTodoAppContext()
 
-    return (
-        <div>
-            <InputPost />
-            {
-                posts ?
-                    posts.map(e => (
-                        <Post
-                            post={e}
-                            key={e.id}
-                            deletePost={deletePost} />
-                    ))
-                    : null
-            }
+    if (posts !== undefined) {
+        return (
+            <div>
+                <InputPost />
+                {
+                    posts ?
+                        posts.map(e => (
+                            <Post
+                                post={e}
+                                key={e.id}
+                                deletePost={deletePost} />
+                        ))
+                        : null
+                }
 
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
 export default Postlist;

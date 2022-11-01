@@ -55,7 +55,7 @@ const useLists = () => {
 
  // füge ein Todo insBackend ein:---------------------
   const addTodoToBackend = async (todo, index) => {
-
+    // index = index + 1;
     var config = {
       method: 'post',
       url: '/todo?listnr='+index,

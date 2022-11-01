@@ -10,6 +10,7 @@ const Home = () => {
 
   const { todos } = useTodoAppContext()
 
+  if (todos !== undefined) {
   return (
     <div>
       <StyledListGroup>
@@ -25,8 +26,8 @@ const Home = () => {
       </StyledListGroup>
 
     </div>
-
   )
+      }
 }
 
 

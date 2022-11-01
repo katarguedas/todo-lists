@@ -3,10 +3,11 @@ const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 const { response } = require('express');
-const pwdat = require('./pwdat');
 const app = express()
 const port = 3001
 //--------------------------------------------------------
+require('dotenv').config()
+const MONGO_URI = process.env.EXPRESS_APP_MONGO_URI;
 //--------------------------------------------------------
 
 const list = [
@@ -27,15 +28,16 @@ const list = [
   }
 ]
 
-
 app.use(express.json());
 
 app.use(async function (req, res, next) {
-  const password = pwdat()
+
+  await mongoose.connect(MONGO_URI);
+
   // LOCAL:
   // await mongoose.connect('mongodb://localhost:27017/todolists');
   //CLOUD REMOTE:
-  await mongoose.connect('mongodb+srv://admin:'+password+'@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
+  // await mongoose.connect('mongodb+srv://admin:' + password + '@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
   next();
 })
 
@@ -82,12 +84,22 @@ app.get('/posts', async (req, res) => {
 app.post('/todo', async (req, res) => {
   const listId = req.query.listnr;
   const todo = req.body;
-  const response = await TodoList.updateOne({ id: listId }, { $push: { tasks: todo } })
-  res.status(200).send("Todo hinzugefügt");
+  console.log("listId:", listId)
+  // const response = await TodoList.updateOne({ id: listId }, { $push: { tasks: todo } })
+  const response = await TodoList.findOne({ id: listId })
+  console.log("response", response)
+  if (response !== null) {
+    { response.tasks.push(todo) }
+    response.save()
+    res.status(200).send("Todo hinzugefügt");
+  } else {
+    res.status(404).send("Todo konnte nicht hinzugefügt werden.");
+  }
+
 })
 
 // PostIt hinzufügen -------------------
-app.post('/newpost', async(req, res) => {
+app.post('/newpost', async (req, res) => {
   const post = req.body;
   const response = await Post.create(post)
   res.status(200).send('Post erfolgreich hinzugefügt')
@@ -107,7 +119,8 @@ app.put('/toggletodo', async (req, res) => {
 
 // DELETE TODO ----
 app.delete('/deletetodo', async (req, res) => {
-  const listId = "list" + req.query.listnr;;
+  const listId = "list" + req.query.listnr;
+  console.log("listId:", listId)
   const todoId = req.query.id;
   const response = await TodoList.findOne({ id: listId })
   response.tasks = response.tasks.filter(e => e.idi != todoId)
