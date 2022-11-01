@@ -51,8 +51,8 @@ const List = ({ list }) => {
               <Todo task={e} key={e.idi} list={list} />
             ))
           } */}
-          <Todo task={list.tasks[0]} key={list.tasks[0].idi} list={list} />
-          <Todo task={list.tasks[1]} key={list.tasks[1].idi} list={list} />
+          {/* <Todo task={list.tasks[0]} key={list.tasks[0].idi} list={list} /> */}
+          {/* <Todo task={list.tasks[1]} key={list.tasks[1].idi} list={list} /> */}
   
         </StyledList>
       </StyledListGroup>
