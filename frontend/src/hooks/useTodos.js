@@ -35,16 +35,15 @@ const useLists = () => {
 
     var config = {
       method: 'get',
-      // url: '/todos',
       url: '/todolists',
       headers: {}
     };
 
     const response = await axios(config);
-
     return (response.data);
+
   }
- 
+
   useEffect(() => {
     loadTodosFromBackend().then(res => {
       setTodos(res);
@@ -53,12 +52,12 @@ const useLists = () => {
 
   // ------------------------------------------------
 
- // füge ein Todo insBackend ein:---------------------
+  // füge ein Todo insBackend ein:---------------------
   const addTodoToBackend = async (todo, index) => {
     // index = index + 1;
     var config = {
       method: 'post',
-      url: '/todo?listnr='+index,
+      url: '/todo?listnr=' + index,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -83,14 +82,14 @@ const useLists = () => {
   }
   // ------------------------------------------------
 
- // toggle Todo im Backend:--------------------------
+  // toggle Todo im Backend:--------------------------
 
   const toggleTodoAtBackend = async (id, index) => {
     index = index + 1;
     var config = {
       method: 'put',
-      url: '/toggletodo?id='+id+'&listnr='+index,
-      headers: { }
+      url: '/toggletodo?id=' + id + '&listnr=' + index,
+      headers: {}
     };
     const response = await axios(config);
 
@@ -105,14 +104,14 @@ const useLists = () => {
   }
   // ------------------------------------------------
 
- // lösche ein Todo im Backend:----------------------
+  // lösche ein Todo im Backend:----------------------
 
   const deleteTodoFromBackend = async (id, index) => {
     index = index + 1;
     var config = {
       method: 'delete',
-      url: '/deletetodo?id='+id+'&listnr='+index,
-      headers: { }
+      url: '/deletetodo?id=' + id + '&listnr=' + index,
+      headers: {}
     };
     const response = await axios(config);
 
@@ -123,11 +122,11 @@ const useLists = () => {
     const t = [...todos];
     deleteTodoFromBackend(list.tasks[taskIndex].idi, listIndex);
     list.tasks.splice(taskIndex, 1);
-    setTodos(t); 
+    setTodos(t);
   }
   // ------------------------------------------------
 
-   // verschiebe ein Todo im Backend:----------------------
+  // verschiebe ein Todo im Backend:----------------------
 
 
   const moveAndDelete = (array, taskIndex, direction, listIndex) => {

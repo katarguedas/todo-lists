@@ -1,14 +1,17 @@
 const e = require('express');
+const dotenv = require('dotenv');
 const express = require('express');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
 const { response } = require('express');
-const app = express()
+const app = express();
 const port = 3001
 //--------------------------------------------------------
-require('dotenv').config()
+// require('dotenv').config()
+dotenv.config()
 const MONGO_URI = process.env.EXPRESS_APP_MONGO_URI;
 //--------------------------------------------------------
+
 
 const list = [
   {
@@ -32,7 +35,8 @@ app.use(express.json());
 
 app.use(async function (req, res, next) {
 
-  await mongoose.connect(MONGO_URI);
+  //  mongoose.connect(MONGO_URI);
+  mongoose.connect(MONGO_URI);
 
   // LOCAL:
   // await mongoose.connect('mongodb://localhost:27017/todolists');
@@ -65,29 +69,32 @@ const TodoList = mongoose.model('todoList', todoListSchema);
 const Todo = mongoose.model('todos', todoSchema);
 const Post = mongoose.model('posts', postSchema);
 
+// mountRoutes(app);
 
 app.get('/', (req, res) => {
   res.send('Hello World! :-)')
 });
 
-app.get('/todolists', async (req, res, next) => {
+app.get('/todolists', async (req, res) => {
   const response = await TodoList.find();
+  if (response != undefined) {
   res.status(200).send(response)
+} else {}
 })
 
 app.get('/posts', async (req, res) => {
   const response = await Post.find()
-  res.status(200).send(response);
+  if (response != undefined) {
+    res.status(200).send(response)
+  } else {}
 })
 
 // TODO HINZUFÜGEN ---------------------
 app.post('/todo', async (req, res) => {
   const listId = req.query.listnr;
   const todo = req.body;
-  console.log("listId:", listId)
   // const response = await TodoList.updateOne({ id: listId }, { $push: { tasks: todo } })
   const response = await TodoList.findOne({ id: listId })
-  console.log("response", response)
   if (response !== null) {
     { response.tasks.push(todo) }
     response.save()
@@ -120,7 +127,6 @@ app.put('/toggletodo', async (req, res) => {
 // DELETE TODO ----
 app.delete('/deletetodo', async (req, res) => {
   const listId = "list" + req.query.listnr;
-  console.log("listId:", listId)
   const todoId = req.query.id;
   const response = await TodoList.findOne({ id: listId })
   response.tasks = response.tasks.filter(e => e.idi != todoId)
