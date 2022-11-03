@@ -7,9 +7,8 @@ const { response } = require('express');
 const app = express();
 const port = 3001
 //--------------------------------------------------------
-// require('dotenv').config()
+require('dotenv').config()
 dotenv.config()
-const MONGO_URI = process.env.EXPRESS_APP_MONGO_URI;
 //--------------------------------------------------------
 
 
@@ -35,13 +34,14 @@ app.use(express.json());
 
 app.use(async function (req, res, next) {
 
-  //  mongoose.connect(MONGO_URI);
-  mongoose.connect(MONGO_URI);
+  await mongoose.connect(process.env.MONGO_URI);
+
 
   // LOCAL:
   // await mongoose.connect('mongodb://localhost:27017/todolists');
   //CLOUD REMOTE:
   // await mongoose.connect('mongodb+srv://admin:' + password + '@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
+
   next();
 })
 
@@ -69,24 +69,19 @@ const TodoList = mongoose.model('todoList', todoListSchema);
 const Todo = mongoose.model('todos', todoSchema);
 const Post = mongoose.model('posts', postSchema);
 
-// mountRoutes(app);
-
-app.get('/', (req, res) => {
-  res.send('Hello World! :-)')
-});
 
 app.get('/todolists', async (req, res) => {
   const response = await TodoList.find();
   if (response != undefined) {
-  res.status(200).send(response)
-} else {}
+    res.status(200).send(response)
+  } else { }
 })
 
 app.get('/posts', async (req, res) => {
   const response = await Post.find()
   if (response != undefined) {
     res.status(200).send(response)
-  } else {}
+  } else { }
 })
 
 // TODO HINZUFÜGEN ---------------------
