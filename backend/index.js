@@ -7,8 +7,10 @@ const { response } = require('express');
 const app = express();
 const port = 3001
 //--------------------------------------------------------
-require('dotenv').config()
+// require('dotenv').config()
 dotenv.config()
+
+const MONGO_URI = process.env.MONGO_URI;
 //--------------------------------------------------------
 
 
@@ -33,13 +35,10 @@ const list = [
 app.use(express.json());
 
 app.use(async function (req, res, next) {
-
-  await mongoose.connect(process.env.MONGO_URI);
-
-
   // LOCAL:
   // await mongoose.connect('mongodb://localhost:27017/todolists');
   //CLOUD REMOTE:
+  await mongoose.connect(MONGO_URI);
   // await mongoose.connect('mongodb+srv://admin:' + password + '@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
 
   next();
