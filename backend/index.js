@@ -34,9 +34,11 @@ const list = [
 
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "../frontend/build/")));
+
 app.use(async function (req, res, next) {
   // LOCAL:
-  // await mongoose.connect('mongodb://localhost:27017/todolists');
+  // await mongoose.connect('mongodb://:27017/todolists');
   //CLOUD REMOTE:
   await mongoose.connect(MONGO_URI);
   // await mongoose.connect('mongodb+srv://admin:' + password + '@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
@@ -68,6 +70,9 @@ const TodoList = mongoose.model('todoList', todoListSchema);
 const Todo = mongoose.model('todos', todoSchema);
 const Post = mongoose.model('posts', postSchema);
 
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
 
 app.get('/todolists', async (req, res) => {
   const response = await TodoList.find();
