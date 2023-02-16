@@ -90,9 +90,9 @@ app.get('/posts', async (req, res) => {
 
 // TODO HINZUFÜGEN ---------------------
 app.post('/todo', async (req, res) => {
-  const listId = req.query.listnr;
+
   const todo = req.body;
-  const response = await TodoList.findOne({ id: listId })
+  const response = await TodoList.findOne({ id: req.query.listId })
   if (response !== null) {
     { response.tasks.push(todo) }
     response.save()
@@ -128,7 +128,6 @@ app.delete('/deletetodo', async (req, res) => {
   const listId = "00" + req.query.listnr;
   const todoId = req.query.id;
   const response = await TodoList.findOne({ id: listId })
-  console.log("response", response)
   response.tasks = response.tasks.filter(e => e.idi != todoId)
   response.save();
   res.status(200).send('Todo erfolgreich gelöscht?')

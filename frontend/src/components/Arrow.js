@@ -9,8 +9,7 @@ const Arrow = ({ list, todos, task, moveAndDelete }) => {
 
 
     const onMoveAndDeleteClick = (array, index, direction) => {
-        const listIndex = todos.findIndex(e => (e.id) === list.id)
-        moveAndDelete(array, index, direction, listIndex)
+        moveAndDelete(array, index, direction, list.id)
     }
 
     //---------------------------------------------

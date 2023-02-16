@@ -53,11 +53,11 @@ const useLists = () => {
   // ------------------------------------------------
 
   // füge ein Todo insBackend ein:---------------------
-  const addTodoToBackend = async (todo, index) => {
-    // index = index + 1;
+  const addTodoToBackend = async (todo, listId) => {
+
     var config = {
       method: 'post',
-      url: '/todo?listnr=' + index,
+      url: '/todo?listId=' + listId,
       headers: {
         'Content-Type': 'application/json'
       },
@@ -129,10 +129,12 @@ const useLists = () => {
   // verschiebe ein Todo im Backend:----------------------
 
 
-  const moveAndDelete = (array, taskIndex, direction, listIndex) => {
+  const moveAndDelete = (array, taskIndex, direction, listId) => {
 
-    addTodoToBackend(array, listIndex);
+    const listIndex = todos.findIndex(e => (e.id) === listId)
     deleteTodoFromBackend(todos[listIndex].tasks[taskIndex].idi, listIndex);
+    const newListId = todos[listIndex + direction].id;
+    addTodoToBackend(array, newListId);
 
     const t = [...todos]
     t[listIndex + direction].tasks.push(array)
