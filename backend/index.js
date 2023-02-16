@@ -42,7 +42,6 @@ app.use(async function (req, res, next) {
   // await mongoose.connect('mongodb://:27017/todolists');
   //CLOUD REMOTE:
   await mongoose.connect(MONGO_URI);
-  // await mongoose.connect('mongodb+srv://admin:' + password + '@cluster0.3klbuox.mongodb.net/codingschule?retryWrites=true&w=majority');
 
   next();
 })
@@ -93,7 +92,6 @@ app.get('/posts', async (req, res) => {
 app.post('/todo', async (req, res) => {
   const listId = req.query.listnr;
   const todo = req.body;
-  // const response = await TodoList.updateOne({ id: listId }, { $push: { tasks: todo } })
   const response = await TodoList.findOne({ id: listId })
   if (response !== null) {
     { response.tasks.push(todo) }
@@ -114,8 +112,9 @@ app.post('/newpost', async (req, res) => {
 
 // 'TODO ÄNDERN ---------------------------
 app.put('/toggletodo', async (req, res) => {
-  const listId = "list" + req.query.listnr;
+  const listId = "00" + req.query.listnr;
   const todoId = req.query.id;
+  
   const response = await TodoList.findOne({ id: listId });
   response.tasks.map(e => {
     e.idi === todoId ? e.done = !e.done : null
@@ -126,9 +125,10 @@ app.put('/toggletodo', async (req, res) => {
 
 // DELETE TODO ----
 app.delete('/deletetodo', async (req, res) => {
-  const listId = "list" + req.query.listnr;
+  const listId = "00" + req.query.listnr;
   const todoId = req.query.id;
   const response = await TodoList.findOne({ id: listId })
+  console.log("response", response)
   response.tasks = response.tasks.filter(e => e.idi != todoId)
   response.save();
   res.status(200).send('Todo erfolgreich gelöscht?')
