@@ -92,6 +92,9 @@ app.get('/posts', async (req, res) => {
 app.post('/todo', async (req, res) => {
 
   const todo = req.body;
+
+  // console.log("todo: ", todo)
+
   const response = await TodoList.findOne({ id: req.query.listId })
   if (response !== null) {
     { response.tasks.push(todo) }

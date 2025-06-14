@@ -14,7 +14,8 @@ const Input = ({ listId, todos, addTodo }) => {
 
         const listIndex = todos.findIndex(e => { return (e.id === listId) })
 
-        if ((todoNameRef !== "") && (todoNameRef.current.value.trim() !== "")) {
+      if ((todoNameRef !== "") && (todoNameRef.current.value.trim() !== "")) {
+          console.log(todoNameRef.current.value)
             addTodo(listIndex, todoNameRef.current.value)
             todoNameRef.current.value = "";
         }
