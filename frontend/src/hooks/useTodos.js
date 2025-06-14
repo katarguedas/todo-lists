@@ -40,7 +40,10 @@ const useLists = () => {
     };
 
     const response = await axios(config);
+    console.log(response.data);
+
     return (response.data);
+
 
   }
 
@@ -54,6 +57,8 @@ const useLists = () => {
 
   // füge ein Todo insBackend ein:---------------------
   const addTodoToBackend = async (todo, listId) => {
+
+    console.log("Todo: ", todo)
 
     var config = {
       method: 'post',
@@ -78,6 +83,7 @@ const useLists = () => {
     t[index].tasks.push(todo)
     const listId = todos[index].id;
     setTodos(t);
+
     addTodoToBackend(todo, listId)
   }
   // ------------------------------------------------
