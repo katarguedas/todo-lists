@@ -1,6 +1,6 @@
 import { useTodoAppContext } from "../providers/TodoAppContext";
 import styled from "styled-components";
-import { GoTrashcan } from "react-icons/go";
+import { GoTrash } from "react-icons/go";
 
 //--------------------------------------------
 
@@ -60,7 +60,7 @@ const StyledH3 = styled.h3`
   font-size: 1.25rem;
 `
 
-const StyledTrash = styled(GoTrashcan)`
+const StyledTrash = styled(GoTrash)`
 position: absolute;
 right: 10px;
 bottom: 12px;

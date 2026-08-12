@@ -5,7 +5,7 @@ import Arrow from "./Arrow.js";
 import { useTodoAppContext } from "../providers/TodoAppContext.js";
 
 //External Components
-import { GoTrashcan } from "react-icons/go";
+import { GoTrash } from "react-icons/go";
 import { GrCheckbox } from "react-icons/gr";
 import { GrCheckboxSelected } from "react-icons/gr";
 
@@ -70,7 +70,7 @@ const StyledTodos = styled.div`
    -moz-osx-font-smoothing: grayscale;
   text-decoration: ${props => props.done === "true" ? "line-through" : "none"};
 `
-const StyledTrash = styled(GoTrashcan)`
+const StyledTrash = styled(GoTrash)`
   position: absolute;
   right: 5px;
   top: 12px;
